@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Teste: Quem é o seu Parente Divino? — Percy Jackson</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #09090b;
+      color: #f4f4f5;
+    }
+    h1, h2, h3, .font-myth {
+      font-family: 'Cinzel', serif;
+    }
+    .option-btn {
+      transition: all 0.15s ease;
+    }
+    .option-btn:active {
+      transform: scale(0.95);
+    }
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #18181b;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #3f3f46;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #52525b;
+    }
+  </style>
+</head>
+<body class="min-h-screen pb-36 selection:bg-amber-500/30 selection:text-amber-200">
+
+  <!-- Header -->
+  <header class="bg-gradient-to-b from-amber-950/40 via-zinc-900/90 to-zinc-950 border-b border-amber-500/20 pt-8 pb-6 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold tracking-wider uppercase mb-3">
+        <span>⚡ Acampamento Meio-Sangue • Teste Interativo</span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 tracking-wide">
+        Quem é o seu Parente Divino?
+      </h1>
+      <p class="text-zinc-400 text-sm sm:text-base mt-2 max-w-2xl mx-auto">
+        Marque as caixinhas abaixo conforme você se identifica. A pontuação de cada chalé e o ranking são calculados automaticamente em tempo real!
+      </p>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 pt-6 space-y-6">
+
+    <!-- Instruções & Seletor de Modo -->
+    <section class="bg-zinc-900/90 border border-zinc-800 rounded-2xl p-5 shadow-xl">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-zinc-800">
+        <div>
+          <h2 class="text-lg font-bold text-amber-300 flex items-center gap-2">
+            📜 Escolha o Método de Pontuação
+          </h2>
+          <p class="text-xs text-zinc-400 mt-0.5">
+            Você pode alternar o método a qualquer momento (as notas são convertidas automaticamente).
+          </p>
+        </div>
+
+        <!-- Mode Toggle -->
+        <div class="inline-flex p-1 rounded-xl bg-zinc-950 border border-zinc-800 self-start">
+          <button id="btn-mode-classic" onclick="setMode('classic')" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition bg-amber-500 text-zinc-950 shadow">
+            Clássico (1 / 0,5)
+          </button>
+          <button id="btn-mode-three" onclick="setMode('three')" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition text-zinc-400 hover:text-zinc-200">
+            Método dos 3 Pontos (0 a 3)
+          </button>
+        </div>
+      </div>
+
+      <!-- Regras dinâmicas -->
+      <div id="rules-classic" class="mt-4 text-sm text-zinc-300 space-y-1.5">
+        <p>• <strong class="text-amber-300">1.</strong> São vinte tópicos com características sobre os filhos de tais deuses.</p>
+        <p>• <strong class="text-emerald-400">2. Sim (1 pt):</strong> A cada tópico que se identificar totalmente, marque <strong>Sim</strong>.</p>
+        <p>• <strong class="text-amber-400">3. Mais ou menos (0,5 pt):</strong> Se você se identificou parcialmente, marque <strong>+/-</strong>.</p>
+        <p>• <strong class="text-zinc-200">4.</strong> O deus em que você fizer mais pontos será o seu parente divino do universo de Percy Jackson.</p>
+        <p class="text-xs text-zinc-500 pt-1">5. O teste não é oficial, é apenas para ajudar. Aconselho procurar mais a fundo na personalidade dos deuses e dos filhos deles.</p>
+      </div>
+
+      <div id="rules-three" class="hidden mt-4 text-sm text-zinc-300 space-y-2">
+        <p class="text-amber-200/90 font-medium">
+          Mais aconselhável se você estiver com muita dúvida em dois ou mais deuses, ou se quiser refazer em caso de empate:
+        </p>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 pt-1">
+          <div class="bg-zinc-950 border border-zinc-800 rounded-lg p-2 text-center">
+            <div class="font-bold text-zinc-400">0</div>
+            <div class="text-[11px] text-zinc-500">Nada a ver</div>
+          </div>
+          <div class="bg-zinc-950 border border-zinc-800 rounded-lg p-2 text-center">
+            <div class="font-bold text-zinc-300">1</div>
+            <div class="text-[11px] text-zinc-400">Quase nada</div>
+          </div>
+          <div class="bg-zinc-950 border border-zinc-800 rounded-lg p-2 text-center">
+            <div class="font-bold text-amber-200">1,5</div>
+            <div class="text-[11px] text-zinc-400">Um pouco mais</div>
+          </div>
+          <div class="bg-zinc-950 border border-zinc-800 rounded-lg p-2 text-center">
+            <div class="font-bold text-amber-300">2</div>
+            <div class="text-[11px] text-zinc-400">Parcialmente</div>
+          </div>
+          <div class="bg-zinc-950 border border-zinc-800 rounded-lg p-2 text-center">
+            <div class="font-bold text-amber-400">2,5</div>
+            <div class="text-[11px] text-zinc-400">Quase totalmente</div>
+          </div>
+          <div class="bg-zinc-950 border border-zinc-800 rounded-lg p-2 text-center">
+            <div class="font-bold text-emerald-400">3</div>
+            <div class="text-[11px] text-zinc-400">Totalmente</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de Ferramentas Rápidas -->
+      <div class="mt-4 pt-3 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-2 text-xs">
+        <div class="flex items-center gap-2">
+          <button onclick="expandAll(true)" class="px-2.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition">
+            Expandir todos
+          </button>
+          <button onclick="expandAll(false)" class="px-2.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition">
+            Recolher todos
+          </button>
+        </div>
+        <button onclick="resetAll()" class="px-2.5 py-1.5 rounded-lg bg-red-950/50 hover:bg-red-900/60 border border-red-800/40 text-red-300 transition">
+          🗑️ Limpar tudo
+        </button>
+      </div>
+    </section>
+
+    <!-- Filtro rápido de deuses -->
+    <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar" id="quick-nav">
+      <!-- Preenchido via JS -->
+    </div>
+
+    <!-- Container dos Deuses -->
+    <div id="gods-container" class="space-y-4">
+      <!-- Preenchido via JS -->
+    </div>
+
+    <!-- Seção de Desempate -->
+    <section id="tiebreaker-section" class="bg-gradient-to-br from-purple-950/30 via-zinc-900 to-zinc-900 border border-purple-500/30 rounded-2xl p-5 shadow-xl">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-purple-500/20">
+        <div>
+          <span class="text-[11px] font-bold uppercase tracking-wider text-purple-300 bg-purple-500/10 border border-purple-500/30 px-2.5 py-0.5 rounded-full">
+            ⚖️ Caso ainda empate
+          </span>
+          <h2 class="text-xl font-bold text-purple-200 mt-2">Desempate — Método dos Três Pontos (0 a 3)</h2>
+          <p class="text-xs text-zinc-400 mt-1">
+            Responda às perguntas extras apenas dos deuses em que você empatou (ou marque os que quiser para somar direto na pontuação final!).
+          </p>
+        </div>
+        <button onclick="toggleTiebreaker()" id="btn-toggle-tb" class="px-4 py-2 rounded-xl bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold transition shrink-0 self-start">
+          Mostrar Desempate
+        </button>
+      </div>
+
+      <div id="tiebreaker-container" class="hidden mt-5 space-y-5">
+        <!-- Preenchido via JS -->
+      </div>
+    </section>
+
+    <!-- Painel de Resultado Final -->
+    <section id="final-result-section" class="bg-gradient-to-b from-zinc-900 to-zinc-950 border-2 border-amber-500/40 rounded-2xl p-6 shadow-2xl">
+      <div class="text-center mb-6">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-400">🏆 Oráculo de Delfos • Resultado</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-zinc-100 mt-1">Seu Parente Divino</h2>
+      </div>
+
+      <div id="winner-display" class="mb-6">
+        <!-- Preenchido via JS -->
+      </div>
+
+      <!-- Ranking Completo -->
+      <div class="mt-6">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-sm font-bold uppercase tracking-wider text-zinc-400">Placar Geral dos Chalés</h3>
+          <span id="total-answered-badge" class="text-xs text-zinc-500">0 itens marcados</span>
+        </div>
+        <div id="ranking-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <!-- Preenchido via JS -->
+        </div>
+      </div>
+
+      <!-- Botão Copiar Resultado -->
+      <div class="mt-6 pt-5 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button onclick="copyResult()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-zinc-950 font-bold text-sm shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-2">
+          <span>📋 Copiar Resultado para Enviar</span>
+        </button>
+        <span id="copy-feedback" class="text-xs text-emerald-400 font-medium hidden">✅ Resultado copiado! Agora é só colar no WhatsApp.</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Barra Flutuante Inferior (Placar ao vivo) -->
+  <div class="fixed bottom-0 inset-x-0 bg-zinc-950/95 backdrop-blur-md border-t border-zinc-800 px-4 py-3 z-50 shadow-2xl">
+    <div class="max-w-4xl mx-auto flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs sm:text-sm" id="live-top3">
+        <span class="text-zinc-400">Marque as opções acima para ver seu Top 3 ao vivo...</span>
+      </div>
+      <a href="#final-result-section" class="shrink-0 px-3.5 py-2 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-xs transition">
+        Ver Resultado ↓
+      </a>
+    </div>
+  </div>
+
+  <script>
+    const GODS_DATA = [
+      {
+        id: "zeus",
+        name: "Zeus",
+        number: "01",
+        icon: "⚡",
+        color: "sky",
+        traits: [
+          "Filhes de Zeus tendem a ter um espírito de liderança, consequentemente não lhe agrada a ideia de receber ordens.",
+          "Mesmo que eles não se ofereçam para o cargo, geralmente são a primeira opção pela escolha de um grupo em geral.",
+          "As pessoas costumam seguir as ordens deles pois sabem que ele fará de tudo para atingir o objetivo, e que tomará as decisões certas.",
+          "São pessoas bem ambiciosas. O desejo e a cobiça por algo grande, ou por ser alguém grande.",
+          "Fazem tudo da melhor forma possível, ou seja, querem sempre mostrar exemplo e ser motivo de orgulho.",
+          "Jamais aceitaria a ideia de ser conhecido por alguém meia-boca. Vão fazer o possível e impossível (pelo menos tentar) para, literalmente, serem os melhores.",
+          "São confiantes e seguros de si. Sabem o seu valor e não deixarão ninguém os rebaixar.",
+          "Pessoas justas, que tentarão ao máximo não quebrar com suas promessas.",
+          "Não é difícil de serem irritados.",
+          "Explodem sempre quando a situação foge do seu controle. Tudo tem que estar ao seu grado, caso o contrário ele já fecha a cara.",
+          "O senso de humor pode não ser comum como o da maioria, mas isso não quer dizer que não tenham.",
+          "São pessoas inteligentes, que não se deixam levar fácil por conversa furada.",
+          "A lealdade é super importante. Não muda de lado nem nos piores momentos, mesmo sabendo que a coisa está feia.",
+          "De algum modo, se sente bem com tempestades com raios.",
+          "Apesar de não demonstrar muito, são pessoas carinhosas, e que gostam de uma atenção a mais.",
+          "São bem perfeccionistas, e não gostam de nada desorganizado.",
+          "Pessoas de emoções fortes, mas que sabem a hora de contê-las e não veem dificuldade.",
+          "Não admitem as coisas com muita facilidade, então pode esperar sentado se quiser ouvir uma confissão de "ok, você estava certo".",
+          "Amam sempre receber elogios, e eles atuam como um combustível (apesar de que vai continuar bem mesmo sem eles).",
+          "Pessoas teimosas e firmes em suas ideias. Defenderá com unhas, dentes e argumentos super válidos, mesmo que por mais maluca seja a ideia."
+        ]
+      },
+      {
+        id: "hera",
+        name: "Hera",
+        number: "02",
+        icon: "🦚",
+        special: "no-children",
+        specialTitle: "Chalé Simbólico — Hera não tem filhos semideuses",
+        specialText: "Hera não tem filhos, seu chalé é apenas "simbólico".
+
+"No entanto, ela nunca terá filhos semideuses, porque como a Deusa do Casamento, não estava em sua natureza ser infiel, o que por sua vez significava que ela não teria, e nunca teria, heróis mortais para fazê-la licitação."",
+        traits: []
+      },
+      {
+        id: "poseidon",
+        name: "Poseidon",
+        number: "03",
+        icon: "🔱",
+        traits: [
+          "São extremamente leais às pessoas. Nunca abandonariam quando a situação está feia, ficariam e lutariam, dando a sua vida para ajudar.",
+          "Suas promessas valem ouro, eles costumam se culpar bastante quando quebram uma, e querem de alguma forma compensar.",
+          "As palavras algumas vezes podem acabar escapando, geralmente eles não conseguem conter o que pensam, acabando saindo por afrontoso.",
+          "Muitas das suas ideias e principalmente os seus motivos não são compreendidos facilmente pelos outros, principalmente os mais velhos.",
+          "Autossuficientes o bastante para tentar fazer tudo sozinhos, às vezes por querer mostrar serviço ou simplesmente por não querer incomodar alguém por ajuda.",
+          "Aliás, querem sempre mostrar do que são capazes. (Mesmo que não sejam, acabam dando um jeito.)",
+          "No fundo têm um bom coração, e o que mais prezam é pelo bem-estar dos que amam.",
+          "Detestam a traição, principalmente quando é consigo. Nunca mais vão olhar para a pessoa com os mesmos olhos.",
+          "Dependem de tempo para decidir a melhor coisa a se fazer, não é simplesmente "ah, pensei bora lá", e sim um "CALMA AÍ, TÔ PENSANDO".",
+          "Odeiam serem apressados, isso só piora as coisas e os fazem ficar nervosos.",
+          "Tendem a ter ideias loucas e arriscadas, mas que no final acabam dando certo.",
+          "Sua ligação com a água é bem forte. Costuma se sentir bem em contato com a água, seja em piscina ou mar. É incrivelmente relaxante e traz paz.",
+          "A vida das pessoas que ama é mais importante que a própria.",
+          "São pessoas divertidas e acolhedoras, sempre serão um ombro amigo para qualquer um.",
+          "É fácil entender o sentimento das pessoas e, muitas vezes, acabam até se identificando.",
+          "São MUITO apegados à família.",
+          "Apegados a algumas coisas que lembram momentos felizes.",
+          "Dariam a vida para salvar as pessoas que amam.",
+          "Não é muito difícil para eles fazerem amizades, justamente por entenderem todos os lados e se colocarem no lugar dos outros.",
+          "Se começam algo, vão terminar de um jeito ou de outro. Talvez não fique como esperado, mas terminar é certeza."
+        ]
+      },
+      {
+        id: "demeter",
+        name: "Deméter",
+        number: "04",
+        icon: "🌾",
+        traits: [
+          "São pessoas, não necessariamente tímidas, mas são caladas. Geralmente em seu próprio mundo e pensamentos.",
+          "Prezam pela educação, e tratam assim até quem não merece tal tratamento.",
+          "Normalmente pacientes, não veem problema em esperar e sabem dar o devido tempo.",
+          "A natureza acalma de uma forma incrível. Se sentem super relaxados e no melhor lugar do mundo.",
+          "Geralmente pacíficos, se ninguém passar do limite e acabar provocando ao extremo.",
+          "Quando explodem em raiva, as pessoas ficam realmente assustadas, justamente por isso não acontecer muito.",
+          "Costumam se interessar pela causa animal e ambiental.",
+          "Sempre estão pensando em um jeito de poluir menos e em ideias sustentáveis.",
+          "Gostam de socializar com as pessoas que geralmente são ignoradas pelas demais.",
+          "São bons ouvintes, e tentarão sempre ajudar com alguma solução pacífica.",
+          "Adoram plantas e já sonharam ou sonham trabalhar com isso.",
+          "Geralmente dão grandes palestras sobre a poluição humana no mundo e como isso está afetando o planeta.",
+          "Sabem a hora certa de falar ou escutar.",
+          "Conseguem manter as palavras ruins para si, pois por mais que a pessoa mereça, a educação vem primeiro.",
+          "Tentam sorrir e parecerem bem mesmo quando quebrados por dentro.",
+          "São corajosos e vão fazer o máximo para ajudar a quem amam.",
+          "Gostam de ler, mais pelo fato de aprender coisas novas que podem ser úteis.",
+          "Apesar de serem considerados tímidos e calados, não são idiotas. Sabem quando alguém está fazendo algo por interesse ou por mal.",
+          "Gostam de acompanhar o crescimento das plantas que cuidam.",
+          "Podem ser perigosos quando extremamente irritados."
+        ]
+      },
+      {
+        id: "ares",
+        name: "Ares",
+        number: "05",
+        icon: "⚔️",
+        traits: [
+          "Costumam ser bastante impulsivos, e não ligam para as consequências dessa impulsividade.",
+          "Não são de se importar com qualquer um, então não ligam se suas ações afetam as pessoas.",
+          "Em hipótese alguma levam desaforo pra casa, na verdade é a pessoa que levaria um olho roxo.",
+          "Têm um pavio EXTREMAMENTE curto, qualquer coisa é motivo para discussão e brigas.",
+          "Odeiam receber ordens, não são daqueles que abaixam o rabinho e simples assim.",
+          "Primeiro, eles não são ajudantes de ninguém, eles são aliados. Eles não são menos do que o igual.",
+          "Adoram brigas e às vezes até começam elas por motivos bobos, por simplesmente brigar.",
+          "São brutos na maior parte do tempo, mas isso não quer dizer que não podem ser o contrário.",
+          "Têm muita, mas muita dificuldade de falar de seus sentimentos, então não os apresse.",
+          "São bastante orgulhosos, e quando o orgulho é afetado, eles empacam que nem uma mula, nada é capaz de mudar a opinião.",
+          "Seu ponto fraco são as pessoas que amam, eles são os únicos que podem conseguir fazer mudar o pensamento e ideias.",
+          "Não têm medo de praticamente nada.",
+          "Pelas pessoas que amam, são capazes de dar a própria vida.",
+          "Alguns são bastante desconfiados e questionam tudo e todos.",
+          "A solução é: violência. Alguém magoou os sentimentos de um amigo? Violência. Falaram dele pelas costas? Violência.",
+          "Apreciam esportes violentos, como luta ou futebol americano.",
+          "Querem que as pessoas obedeçam suas ordens, apesar de seu orgulho não ajudar muito em tomar as melhores decisões como líder.",
+          "São egoístas com o que consideram seu, e não gostam de dividir.",
+          ""Como assim ele falou assim com você? Ele vai receber uma surra!"",
+          "Apesar da máscara de pessoa durona, no fundo têm medo de perder quem amam."
+        ]
+      },
+      {
+        id: "atena",
+        name: "Atena",
+        number: "06",
+        icon: "🦉",
+        traits: [
+          "Adoram leitura, é como um refúgio para si.",
+          "Não precisam necessariamente serem bons na escola (porque vai da dificuldade de cada pessoa), mas eles adoram aprender coisas novas.",
+          "São pessoas criativas, que pensam em coisas novas e inovadoras.",
+          "É fácil de pensar em um plano, e sabem agir sob pressão.",
+          "Seus planos tendem a ser seguros, mas de vez em quando podem arriscar.",
+          "São pessoas sonhadoras, que pensam muito no futuro.",
+          "Recebem críticas construtivas muito bem (apesar de ficarem tristes por não terem acertado de primeira), sabem que com elas é possível melhorar mais e mais.",
+          "São orgulhosos, mas conseguem deixar o orgulho de lado se for para o bem das pessoas que importam.",
+          "Conseguem liderar com facilidade, e pelo caminho mais seguro.",
+          "A lógica sempre está na frente.",
+          "Vão sempre pensar em uma saída, mesmo que no improviso.",
+          "Tentam se mostrar alguém confiável e responsável para os mais velhos.",
+          "Entre amigos, são mais leves e soltos, o senso de humor pode ser diferente, mas isso não quer dizer que sejam pessoas mal-humoradas.",
+          "Sabem do seu potencial e não gostam quando ignoram.",
+          "São aquelas pessoas que as mães adorariam que o filho tivesse como companhia, pois são responsáveis e conseguem manter os outros na linha.",
+          "Não são fãs de quebrar as regras, fazendo isso apenas se for MUITO necessário.",
+          "Adoram saber das coisas e apresentar fatos, mas as pessoas tendem a achar "metido" por simplesmente querer falar do que sabem.",
+          "Apreciam a sua própria companhia, não há problema em ficar sozinha com um livro em mãos.",
+          "Aprendem rápido quando o assunto lhes interessa.",
+          "Acreditam que as regras são importantes, pois sem elas as pessoas não respeitariam nada e viraria uma bagunça."
+        ]
+      },
+      {
+        id: "apolo",
+        name: "Apolo",
+        number: "07",
+        icon: "☀️",
+        traits: [
+          "Não têm problemas em fazer amizades, em todo lugar que vão é fácil se enturmar.",
+          "Pessoas comunicativas, falantes e que gostam de companhia.",
+          "São seguros de si e sabem que são bons.",
+          "Geralmente simpáticos com todo mundo.",
+          "Costumam ser aquela pessoa que ilumina o local, que traz felicidade e risadas.",
+          "Gostam de tocar instrumentos musicais.",
+          "Pessoas calorosas que adoram contato físico, sempre abraçando as pessoas.",
+          "Adoram brincadeiras e pegadinhas, de preferência que não sejam consigo, mas não costumam se irritar fácil com isso.",
+          "Na maior parte do tempo estão sorrindo, mesmo que não estejam felizes por dentro.",
+          "Adoram vôlei (não precisam necessariamente jogar, serem bons e tals, mas assistir ou achar o esporte legal também vale).",
+          "Adoram desenhar. São bem ligados à arte em si.",
+          "Têm uma autoestima considerada alta, mas é porque eles sabem de seu valor e se aceitam.",
+          "Gostam de ouvir música e cantar, lhes faz se sentir bem (foque no sentimento da música, você não precisa cantar bem para se sentir bem cantando).",
+          "São pessoas acolhedoras, que não julgam os outros pela aparência e nem se importam com estereótipos.",
+          "Não têm vergonha de simplesmente chegar na pessoa que gostam, e não ligam para opiniões alheias.",
+          "Têm ou já tiveram uma paixão pela medicina (pode se encaixar em veterinária também).",
+          "De repente estão cantando sem motivo, qualquer hora é hora de cantar e de alegria.",
+          "Não são muito fãs de baixo-astral, sempre tentam animar todo mundo com piadas estranhas e sem sentido.",
+          "É aquela pessoa que você sempre pode contar, que vai estar lá para segurar o seu cabelo caso você dê PT.",
+          "São geralmente mais da emoção que da razão, é mais fácil darem apoio emocional do que uma solução para enfrentar um problema."
+        ]
+      },
+      {
+        id: "artemis",
+        name: "Ártemis",
+        number: "08",
+        icon: "🏹",
+        special: "hunter",
+        specialTitle: "Caçadoras de Ártemis — Juramento de Lealdade",
+        specialText: "Ártemis NÃO tem filhos, mas você pode ser uma caçadora. As caçadoras não têm uma personalidade específica, qualquer uma pode ser uma caçadora, mas tem algumas exigências quando você aceita:",
+        specialLink: "https://acampamentomeiosangue.fandom.com/pt/wiki/Ca%C3%A7adoras_de_%C3%81rtemis",
+        traits: []
+      },
+      {
+        id: "hefesto",
+        name: "Hefesto",
+        number: "09",
+        icon: "🔨",
+        traits: [
+          "São pessoas de bom coração, apesar de não saberem como demonstrar isso.",
+          "Pacíficos, a ideia de violência não é muito agradável, mas não duvide que eles usem dela caso necessário.",
+          "Gostam de inventar coisas novas e gostariam de serem conhecidos por isso.",
+          "Geralmente são pessoas reservadas, gostam da companhia das pessoas que realmente querem o seu bem.",
+          "Acham mais fácil se concentrar quando sós.",
+          "São apaixonados por arquitetura ou robótica.",
+          "Desde criança gostavam de brinquedos de montar e coisas mais complexas.",
+          "Não conseguem demonstrar seus sentimentos com muita facilidade.",
+          "Se pudessem, escolheriam fazer todos os trabalhos sozinhos.",
+          "É muito difícil para eles entender o próprio sentimento, imagina o dos outros.",
+          "São boas companhias se você quiser apenas alguém para estar ao seu lado em silêncio, sem lhe julgar.",
+          "Querem ser importantes e mostrar serviço, que são úteis.",
+          "Odeiam a traição, consideram um dos piores defeitos que existem.",
+          "Máquinas são sempre boas companhias.",
+          "Não são bons com conselhos.",
+          "É difícil ter inimigos, eles simplesmente não fazem nada ao ponto de serem odiados por alguém, são apenas quietos em seu canto.",
+          "Odeiam o fato das pessoas excluírem os "estranhos" ou os "desajeitados".",
+          "Suas amizades são sempre verdadeiras e confiáveis, que vai poder contar pela vida toda.",
+          "São engraçados, mas só quem realmente lhes conhece sabe desse lado.",
+          "As pessoas não costumam entender quando eles falam sobre robótica, e eles têm que traduzir e diminuir várias vezes, isso se as pessoas não desistirem de entender."
+        ]
+      },
+      {
+        id: "afrodite",
+        name: "Afrodite",
+        number: "10",
+        icon: "💖",
+        traits: [
+          "São bonitos, mas isso porque eles se consideram, não pela opinião alheia. Eles inclusive têm em mente que todo mundo deveria se aceitar como é.",
+          "Extremamente confiantes e seguros de si. Sua aura emana poder e confiança.",
+          "Gostam de alegria e de bom astral.",
+          "Atuam muito bem. Sabem usar do charme para conseguir o que querem.",
+          "Podem ter fama de maldosos, mas eles apenas são um pouco mais individualistas que os outros, mas isso não quer dizer que só pensem em si.",
+          "São pessoas boas, que veem beleza e amor em tudo e todos.",
+          "O amor é uma palavra muito forte para eles, eles realmente apreciam esse sentimento e vivem ele ao máximo.",
+          "A união que eles têm é incrível. Alguém quebrou o coração de uma amiga? Ah, pode ter certeza que todos eles irão se vingar.",
+          "Apreciam a moda e gostam de se vestir bem (claro, com seus próprios gostos).",
+          "Ser o centro das atenções é sempre legal, e eles adoram.",
+          "São boas pessoas para levantar o astral de alguém. Vão passar o dia inteiro ajudando a pessoa se sentir bem com quem é, tanto fisicamente quanto internamente. São as melhores pessoas para ajudar os outros a se aceitarem.",
+          "Sabem que são poderosos e adoram isso.",
+          "Por mais que não seja intencional, muitos acabam "quebrando" o coração das pessoas porque o amor acaba não sendo correspondido.",
+          "Geralmente educados, isso até alguém os insultar.",
+          ""Por favorzinho, sabe que eu te amo né?" Acaba sendo uma das frases mais usadas.",
+          "As pessoas costumam reclamar da demora deles para se arrumar quando vão sair.",
+          "Tudo para si é um máximo e super incrível, não se assuste se eles começarem a te elogiar por "pouca coisa".",
+          "A opinião alheia não os afeta, pois se aceitam do jeito que são.",
+          "Usam as palavras certas e jeitos que a pessoa não consegue dizer não para eles.",
+          "Adoram falar sobre sentimentos com os outros e de dar conselhos amorosos."
+        ]
+      },
+      {
+        id: "hermes",
+        name: "Hermes",
+        number: "11",
+        icon: "👟",
+        traits: [
+          "Não é difícil para eles inventar uma desculpinha esfarrapada e simplesmente se safar das coisas.",
+          "As pessoas tendem a acreditar porque por fora parecem o tipo de pessoa que nunca faria nada de errado.",
+          "Usam sempre as palavras certas para determinadas situações, e têm uma lábia fantástica.",
+          "Adoram contar piadas idiotas e fazer as pessoas rirem.",
+          "Mesmo sem querer, sempre estão atentos às coisas e observando o redor.",
+          "Não são ladrões (até porque isso dá cadeia né mores 💅), mas tendem a pegar coisas emprestadas sem pedir, por exemplo uma roupa de um irmão.",
+          "Sabe quando você quebra algo e coloca de novo no lugar para a próxima pessoa achar que quebrou? Isso resume muito os filhes de Hermes.",
+          "Adoram fazer pegadinhas e brincadeiras.",
+          "Pessoas muito acolhedoras e simpáticas, uma nova companhia nunca é demais.",
+          "Quanto mais amigos melhor. Amam estar com pessoas. E mais gente significa mais pessoas como alvo de suas brincadeiras.",
+          "É fácil ganhar discussões de escolha (por exemplo, escolher um filme), pois eles sabem usar argumentos incríveis quando querem algo.",
+          "E quando não querem algo, acham defeitos para que a pessoa simplesmente desista da ideia.",
+          "Amam viajar e conhecer novos lugares, se pudessem até trabalhariam com isso.",
+          "Conseguem manter a "aparência" de alguém confiável e que nunca faria ou faz algo de ruim.",
+          "É bem fácil para eles convencer as pessoas.",
+          "Sabem quando a situação está feia e é hora de meter o pé, fugir de fininho é com eles mesmo.",
+          "Suas ideias para se safar não têm limites, se estão com problemas sua mente é muito rápida em uma solução.",
+          "São geralmente bem falantes e não são muito fãs do silêncio, nem de estar sozinhos.",
+          "Não veem problema na mentira se isso for para salvar sua própria pele.",
+          "A palavra esperteza lhes define mais do que inteligência."
+        ]
+      },
+      {
+        id: "dionisio",
+        name: "Dionísio",
+        number: "12",
+        icon: "🍇",
+        traits: [
+          "Por fora podem parecer inofensivos, mas quem conhece de verdade sabe que é exatamente o contrário.",
+          "Tendem a ser individualistas, ou só se importar com a família e amigos.",
+          "Pessoas realmente festeiras, não perdem uma festa por nada e amam estar no meio da multidão.",
+          "As pessoas costumam rotular eles como loucos por causa de sua personalidade excêntrica.",
+          "São pessoas alegres e despreocupadas com a vida.",
+          "Não são o melhor exemplo de organização, bom, nem de uma vida calma, nem de segurança… talvez não sejam um bom exemplo de nada.",
+          "Eles gostam de viver a vida e o resto que se dane, realmente não ligam para as consequências.",
+          "Amam a adrenalina e coisas que fazem sua pulsação acelerar.",
+          "Gostam de correr perigos e não ligam se são tachados de arrogantes.",
+          "Pessoas aventureiras, que não têm medo do que vier pela frente e aceitam qualquer desafio.",
+          "As pessoas tendem a rotulá-los como vagabundos, que não querem um futuro e querem apenas passar o dia em festas.",
+          "Uva é a sua fruta favorita.",
+          "São dramáticos e exagerados, sempre aumentando as coisas e tentando dar uma de vítima.",
+          "Não costumam ligar para nada, não confie alguma coisa importante para eles fazerem porque não dará certo.",
+          "Não ligam para a opinião dos outros.",
+          "Nas festas são aquelas pessoas que curtem sem se preocupar com o dia seguinte.",
+          "É raríssimo eles admitirem que se arrependem de algo (mesmo que a vontade seja voltar no tempo e dar um tapão na cara de si mesmo e falar para não fazer).",
+          "São aquelas pessoas que vão ficar até a festa acabar.",
+          "Não costumam temer o que suas ações podem ocasionar no futuro.",
+          "Sua opinião é a que importa e detestam que digam o contrário."
+        ]
+      },
+      {
+        id: "hades",
+        name: "Hades",
+        number: "13",
+        icon: "💀",
+        traits: [
+          "São pessoas normalmente bem reclusas, que geralmente estão sozinhas em seu canto.",
+          "As pessoas costumam os rotular como sombrios, mas não é bem assim, pelo menos não totalmente.",
+          "Em geral são bem tímidos e é difícil de se abrir com as pessoas.",
+          "É difícil fazer amizades, mas quando conseguem, pode saber que será um ótimo amigo e fará de tudo pela pessoa.",
+          "As pessoas que não os conhecem direito costumam se afastar por medo.",
+          "Inteligentes e não têm dificuldade de pensar friamente em um plano.",
+          "Gostam de rock.",
+          "No fundo, eles gostam de atenção e carinho, mas de forma alguma admitem isso.",
+          "São pessoas gananciosas e não gostam de dividir o que lhes pertence.",
+          "Não costumam temer a morte, e sabem que isso é um processo natural e encaram com tamanha tranquilidade.",
+          "ODEIAM falar sobre seus sentimentos. Não existe pessoa melhor para guardar do que ELES MESMOS.",
+          "Não vão de jeito nenhum falar sobre paixão com as pessoas, é constrangedor.",
+          "Podem ser bastante teimosos com suas ideias e pensamentos.",
+          "Mesmo estando errados, odeiam admitir isso.",
+          "Sempre têm pessoas que são o seu ponto fraco, e que defendem com unhas e dentes, e por elas dão a vida.",
+          "Suas roupas são na maioria na cor preta.",
+          "Odeiam quando a atenção vem toda para si de uma vez, costumam ficar bem nervosos com tamanha atenção.",
+          "Em uma sala com muita gente, eles evitam o centro e preferem os cantos ou perto da parede.",
+          "Gostam da sua própria companhia e não é difícil para eles ficarem sozinhos. E odeiam os olhares de pena, como se fosse extremamente triste alguém apreciando sua própria companhia.",
+          "Não são muito de festas, e nem de locais com muitas pessoas."
+        ]
+      },
+      {
+        id: "iris",
+        name: "Íris",
+        number: "14",
+        icon: "🌈",
+        traits: [
+          "São pacíficos. Realmente não desejam o mal a ninguém.",
+          "Só atacam por pura autodefesa, detestam a violência gratuita.",
+          "Gentis e sempre tratam tudo e todos com educação, coisa que prezam bastante.",
+          "Misericordiosos, mesmo que a pessoa mereça, raramente farão algo para prejudicar.",
+          "Prezam MUITO pela liberdade.",
+          "Odeiam serem proibidos de fazerem algo.",
+          "Têm um coração bom, sempre tentando ver o lado bom das pessoas e tentam dar uma segunda chance.",
+          "Você nunca deve dizer a eles o que eles têm que fazer ou como agir, eles odeiam isso.",
+          "Se dão bem com todo mundo.",
+          "É fácil de socializar, em todo lugar que vão conseguem fazer amizades ou pelo menos manter uma conversa agradável.",
+          "Odeiam que opinem em suas vidas.",
+          "Às vezes dão discursos longos sobre a liberdade.",
+          "São geralmente bem calmos e é difícil de realmente se estressarem.",
+          "Entendem fácil o sentimento das pessoas e conseguem se colocar no lugar delas.",
+          "São as melhores pessoas para alguém desabafar, vão primeiro ouvir tudo o que a pessoa tem a dizer para então aconselhar.",
+          "Gostam de fazer as pessoas se sentirem bem.",
+          "Têm uma aura de liberdade que costuma incentivar as outras pessoas.",
+          "Prezam pela harmonia e que todos pelo menos se entendam.",
+          "Geralmente são aquelas pessoas que fazem de tudo para que o grupo permaneça unido.",
+          "Se pudessem pedir alguma coisa, pediriam a paz mundial."
+        ]
+      },
+      {
+        id: "hipnos",
+        name: "Hipnos",
+        number: "15",
+        icon: "💤",
+        traits: [
+          "São geralmente pessoas tranquilas e calmas.",
+          "Muito desligados e desatentos para o que está acontecendo em volta.",
+          "Pessoas extremamente sábias, seu passatempo favorito é ler para aprender.",
+          "Não são as melhores pessoas para confiar alguma coisa, ou esquecem ou ficam com preguiça de fazer.",
+          "Conhecidos por dormir muito, e que sem despertador não vão acordar tão cedo.",
+          "Estão longe de serem os mais responsáveis.",
+          "São procrastinadores natos, costumam sempre deixar as coisas para última hora, isso quando fazem.",
+          "Quem conhece sabe que são pessoas divertidas.",
+          "Contam piadas estranhas e difíceis de entender, enquanto eles riem as pessoas ainda estão tentando entender.",
+          "São preguiçosos e um pouco covardes.",
+          "Gostam de interpretar os sonhos, sempre buscando significados para as coisas.",
+          "A presença deles traz sonolência e calmaria.",
+          "Geralmente estão no mundo da lua, com a cabeça pensando em outras coisas menos a realidade.",
+          "Acreditam que todos os sonhos têm significados.",
+          "Estão sempre sonolentos.",
+          "Às vezes são lerdos para entender e processar as informações.",
+          "Os sonhos tendem a ser lúcidos e apresentarem algo real.",
+          "Não negam ajuda para seus amigos.",
+          "Sempre que podem estão dormindo ou cochilando.",
+          "Gostam do silêncio e da calmaria."
+        ]
+      },
+      {
+        id: "nemesis",
+        name: "Nêmesis",
+        number: "16",
+        icon: "⚖️",
+        traits: [
+          "São imparciais na maioria das coisas que fazem, vão pelo certo, nunca deixam de escolher algo só porque pode magoar um amigo.",
+          "São leais às pessoas que amam, e jamais vão deixá-las na mão.",
+          "Extremamente sinceros, então se você tem dificuldade de receber críticas é melhor não perguntar a eles.",
+          "Fiéis, mesmo nos momentos mais difíceis.",
+          "Honestos e prezam pela franqueza, nunca se deve mascarar as coisas.",
+          "Seu senso de justiça é absurdo. Todos devem pagar pelo que fazem e ninguém deve sair impune das coisas ruins.",
+          "Extremamente vingativos, nunca vão esquecer o que fizeram para si ou família.",
+          "Querem igualdade acima de tudo.",
+          "Prezam pela franqueza, podendo até punir quem não cumpre a isso.",
+          "Não acham que a sorte deveria existir, pois é injusto alguns terem mais que os outros.",
+          "Se afastam sem pensar duas vezes de pessoas infiéis, nunca sequer conseguem ver uma justificativa para isso.",
+          "Leais às suas próprias ideias e raramente vão mudar.",
+          "A melhora nunca é demais.",
+          "Sempre estarão ao seu lado quando precisar.",
+          "Com certeza não são aquele tipo de pessoa que só está ao seu lado em momentos bons.",
+          "Podem ser fáceis de serem irritados, e acredite, ninguém quer eles irritados.",
+          "Geralmente não são fãs de brincadeiras ou qualquer coisa fútil do tipo.",
+          "Tentam mostrar educação, principalmente aos mais velhos.",
+          "Odeiam mentiras, a verdade é sempre melhor, mesmo que dura.",
+          "Não costumam ligar se machucam os sentimentos dos outros, eles só são eles mesmos."
+        ]
+      },
+      {
+        id: "nice",
+        name: "Nice",
+        number: "17",
+        icon: "🏆",
+        traits: [
+          "Tudo é motivo de competição.",
+          "Amam ganhar, e não existe essa de o que importa é participar.",
+          "Costumam causar confusões por causa da sua aura competitiva, as outras pessoas acabam se afastando.",
+          "Têm uma personalidade excêntrica e "pirada".",
+          "As pessoas costumam rotular eles como loucos por causa de sua obsessão por ganhar.",
+          "São pessoas bem animadas e que nunca estão quietas.",
+          "Se afastam daqueles que podem atrapalhar suas futuras conquistas, mesmo que a pessoa seja importante para si.",
+          "Amam esportes.",
+          "Só ficam na presença de quem realmente gosta de sua companhia.",
+          "São espertos e ambiciosos.",
+          "Estão sempre em competições, ou para assistir ou participar.",
+          "Gostam de ser juízes das partidas.",
+          "São determinados e sempre vão cumprir seu objetivo.",
+          "Quando perdem alguma coisa, melhor sair de perto. Vão ficar um tempão emburrados e bravos consigo mesmos.",
+          "Não é todo mundo que consegue entender seus objetivos e planos.",
+          "São focados e nada e nem ninguém irá mudar sua visão do que querem pra si.",
+          "Prezam acima de tudo, amizades que lhes entendam de verdade.",
+          "Geralmente isolados e focados em conseguir vencer seus objetivos.",
+          "Quando têm a tão sonhada vitória é melhor os outros se prepararem, vão passar dias falando sobre."
+        ]
+      },
+      {
+        id: "hebe",
+        name: "Hebe",
+        number: "18",
+        icon: "🥂",
+        traits: [
+          "São cheios de energia.",
+          "Sempre querendo ajudar todo mundo.",
+          "Adoram fazer novos amigos.",
+          "Generosos e de bom coração, se eles têm de muito, vão dar para o próximo.",
+          "São pessoas bastante receptivas. Tratam todo mundo bem.",
+          "Geralmente nunca estão sozinhos, e sim na companhia de diversos amigos.",
+          "Não gostam de ver os outros tristes, e sempre vão fazer de tudo até animá-los.",
+          "Não veem problema em mentir se for para agradar alguém, como por exemplo, falar que a roupa está bonita quando não está.",
+          "Os melhores amigos que alguém pode ter, sempre vão estar ao lado para ajudar.",
+          "Às vezes são feitos de bobos fácil, por causa da "inocência".",
+          "Podem acabar sendo usados pelos mais manipuladores, por causa da sua bondade excessiva.",
+          "Alguns são desajeitados.",
+          "Quando quebram algo que não era seu, vão fazer de tudo para a pessoa desculpar (mesmo que ela já tenha falado que não foi nada).",
+          "Raramente se irritam ou explodem.",
+          "Um dos seus maiores medos é ficar sozinho sem amigos.",
+          "Têm dificuldade de dizer "não" para as pessoas.",
+          "Querem sempre o bem de todo mundo, mesmo que não mereçam.",
+          "Quase não têm inimigos, pois não têm o porquê das pessoas os odiarem, e se odeiam é por motivo bobo.",
+          "São calorosos e gostam de contato físico, como um abraço ou beijinho no rosto.",
+          "Odeiam decepcionar quem contava consigo."
+        ]
+      },
+      {
+        id: "tique",
+        name: "Tique",
+        number: "19",
+        icon: "🎲",
+        traits: [
+          "Sua personalidade muda constantemente e drasticamente.",
+          "Uma hora são as pessoas mais felizes do mundo, outra estão xingando qualquer um que veem pela frente.",
+          "As pessoas costumam ser bem cautelosas quando se trata deles, resumidamente um pequeno medo do que eles são capazes.",
+          "Acreditam muito em sorte.",
+          "Geralmente não são de socializar, tendo poucos amigos, mas amigos verdadeiros.",
+          "Gostam de apostar e jogar jogos de azar.",
+          "Aparecem do nada na conversa quando cansam da sua própria companhia.",
+          "Seus amigos geralmente são muito pacientes para conseguirem aguentá-los.",
+          "São pessoas claras e objetivas, sempre indo direto no assunto.",
+          "Têm sua opinião própria e ninguém consegue mudar.",
+          "Não gostam de enrolação.",
+          "Nunca vão ter ressentimentos, não adianta chorar pelo leite derramado, o que foi feito tá feito.",
+          "Odeiam pessoas que choram por tudo e se lamentam por tudo.",
+          "São considerados arrogantes.",
+          "Não se deixam manipular pelos outros, sua opinião sempre será a mesma.",
+          "Escolhem sempre o método mais seguro e odeiam quebrar as regras.",
+          "Não adianta vir com cena sentimental para cima deles, pois não costumam se comover.",
+          "Sua vida é basicamente movida a momentos muito bons e muito ruins.",
+          "Acreditam em amuletos que trazem sorte.",
+          "Também acreditam em coisas que dão azar, como passar debaixo de uma escada ou quebrar o espelho."
+        ]
+      },
+      {
+        id: "hecate",
+        name: "Hécate",
+        number: "20",
+        icon: "🔮",
+        traits: [
+          "Seu humor é bem variável.",
+          "Costumam acordar com um humor e dormir com um outro.",
+          "São extremamente vingativos.",
+          "Conhecidos como sábios, que sabem das coisas pois vivenciaram.",
+          "Orgulhosos, e seu orgulho é facilmente ferido.",
+          "Eles odeiam serem rebaixados ou subestimados.",
+          "São frios quando precisam, não tendo dificuldade de colocar a razão na frente da emoção.",
+          "Podem ter a fama de "malvados" por causa dessa sua frieza.",
+          "As pessoas em volta costumam dizer que eles têm um ar enigmático e misterioso.",
+          "Não são muito fãs de falar sobre sentimentos, nem de se abrir com qualquer um.",
+          "Mas, não têm dificuldade de se abrir com quem confiam de verdade.",
+          "São criativos, sempre tendo ideias diferenciadas.",
+          "Nunca esquecem de quem os ajudou, e vão tentar retribuir.",
+          "Também nunca se esquecem de quem negou ajuda, e tentarão buscar vingança.",
+          "Gostam de magia, até procuram saber mais.",
+          "São gentis com quem merece tal gentileza.",
+          "Não costumam ter uma boa visão de disciplina, são bem difíceis de se controlar, os mais velhos que o digam.",
+          "Na maior parte do tempo são introvertidos.",
+          "Acreditam fielmente que tudo que vai, um dia volta.",
+          "São a primeira alternativa para quem quer algum conselho."
+        ]
+      },
+      {
+        id: "eolo",
+        name: "Éolo",
+        number: "21",
+        icon: "🌪️",
+        traits: [
+          "Normalmente são frios com tudo e todos.",
+          "Explodem muito facilmente quando a situação foge do controle.",
+          "Mas, quando está tudo em ordem, costumam ser calmos, e essa calmaria chega até ser assustadora.",
+          "A personalidade é forte, vivem todas as emoções com intensidade.",
+          "São instáveis, então melhor não provocar muito.",
+          "Considerados insensíveis.",
+          "Geralmente calmos e centrados, nunca colocam a emoção na frente da razão.",
+          "Pensam somente na sua família e amigos, raramente vão se preocupar com qualquer um.",
+          "Tomam as melhores decisões justamente por pensar friamente.",
+          "No geral, são pessoas boas que não desejam mal gratuito.",
+          "Não cutuque a onça com vara curta, isso é o que mais define eles.",
+          "Apenas um olhar deles pode assustar muita gente.",
+          "É difícil relaxar muito com a companhia deles, pois o medo de que eles mudem drasticamente é grande.",
+          "Gostam de que tudo esteja sob seu controle.",
+          "A ideia de receber ordens não lhes agrada muito, mas tudo bem, desde que a pessoa seja realmente uma boa líder.",
+          "Costumam ser individualistas.",
+          "Sempre há alguém que consegue os acalmar, e só escutam aquele alguém.",
+          "Ser temido é melhor do que ser amado pelos outros.",
+          "Seu senso de humor é um pouquinho mais fechado do que o normal, ou seja, é difícil fazê-los rir ou achar algo engraçado.",
+          "Fazem de tudo para proteger as pessoas que amam."
+        ]
+      },
+      {
+        id: "persefone",
+        name: "Perséfone",
+        number: "22",
+        icon: "🌸",
+        note: "Perséfone não tem filhos semideuses, é um caso parecido com Hera, mas por insistência resolvi colocar também:",
+        traits: [
+          "São pessoas dóceis, que não costumam usar da violência.",
+          "Amigáveis, sempre querendo fazer amizades e tentando incluir todos.",
+          "Podem ser muito mal-humorados e chatos quando o clima também não está bom.",
+          "No frio, costumam ser mais rabugentos.",
+          "No calor, são as melhores pessoas possíveis.",
+          "Geralmente simpáticos.",
+          "Procuram não demonstrar falta de educação.",
+          "É difícil falarem algum palavrão, e quando falam são aqueles que dá vontade de rir de tão bobos.",
+          "Seu humor varia com o tempo.",
+          "São atraídos pelo obscuro e enigmático.",
+          "Se apegam fácil nas coisas.",
+          "O calor é mil vezes melhor que o frio.",
+          "Verão e primavera são as estações favoritas.",
+          "Fazem as coisas no calor da emoção e se arrependem depois.",
+          "São bem curiosos, não aguentam ficar só na imaginação.",
+          "Ajudam os outros, mesmo que por educação.",
+          "Amam as plantas, principalmente as flores.",
+          "Leais a quem amam.",
+          "Tratam todos bem, por mais que não mereçam, pois não querem demonstrar falta de educação.",
+          "Gostam de estampas floridas e de cores mais vivas."
+        ]
+      },
+      {
+        id: "melinoe",
+        name: "Melinoe",
+        number: "24",
+        icon: "👻",
+        traits: [
+          "Mesmo que sejam sociáveis, estão constantemente sofrendo alterações de humor drásticas: enquanto em um momento estão se demonstrando ativos em uma discussão, no outro se tornam tímidos e menos participativos.",
+          "Na maioria das vezes tão tímidos, e até sérios, mas não é sempre assim.",
+          "Costumam se arrepender de falar algumas coisas, por isso prefere apenas ouvir.",
+          "As pessoas têm dificuldade para os entender.",
+          "Geralmente, as outras pessoas se afastam deles, porque têm um pouco de medo do jeito que estes possuem.",
+          "Podem ser engraçados e divertidos, mas só mostram isso com as pessoas em que confiam.",
+          "Seu humor pode mudar de uma hora para outra. Em um momento, eles estão felizes, enquanto podem estar frios e ríspidos em outro.",
+          "São agradáveis na maior parte do tempo.",
+          "Bons para conversar, principalmente por saberem ouvir e só falarem quando necessário.",
+          "Costumam ter assunto para dar e vender, quando começam a conversar é difícil parar.",
+          "Perdem bastantes amigos por essas alterações de humor, não é qualquer um que consegue entender.",
+          "Algumas vezes nem conseguem socializar, pois as pessoas tendem a ter uma imagem ruim de si.",
+          "Por ouvirem bastante, sabem de muitas coisas.",
+          "Estão sempre atentos ao redor.",
+          "Conseguem descobrir quando alguém só está com eles por algum interesse.",
+          "Suas histórias podem ser bem loucas e inacreditáveis.",
+          "Sabem bastante curiosidades estranhas e até medonhas.",
+          "Podem ser bem arrogantes quando não estão de bom humor.",
+          "Não é fácil de os irritar, mas quando isso acontece é melhor não ficar por perto.",
+          "Não gostam de falsidade."
+        ]
+      },
+      {
+        id: "macaria",
+        name: "Macária",
+        number: "25",
+        icon: "🕯️",
+        traits: [
+          "Mentir já virou uma rotina para eles, e não se sentem maus com isso.",
+          "Não gostam de socializar, mas fazem porque é necessário.",
+          "São sombrios.",
+          "Geralmente gostam de ficar sozinhos, apenas observando.",
+          "Fogem das coisas que não lhes interessam.",
+          "Não gostam de brincadeiras.",
+          "Geralmente calmos e serenos.",
+          "Não se irritam com facilidade.",
+          "É difícil de alguém conquistar a confiança deles.",
+          "Quando acontece, viram extremamente leais aos amigos.",
+          "Dariam a vida pelas pessoas que amam, mesmo que não gostem de demonstrar isso.",
+          "Dificilmente conseguem fazer eles rirem de algo.",
+          "Acham que não têm tempo para diversão, estão mais ocupados em deixar seus amigos felizes do que a si mesmos.",
+          "Conseguem mentir facilmente.",
+          "Não são de se importar com o que não interessa aos amigos.",
+          "Todo mundo costuma dizer que eles são "góticos".",
+          "Sua paz interior é praticamente inabalável.",
+          "Não são muito de falar palavrão, isso porque não acham necessário.",
+          "Se quiserem tentar, conseguem fazer amizades facilmente."
+        ]
+      },
+      {
+        id: "nix",
+        name: "Nix",
+        number: "27",
+        icon: "🌑",
+        traits: [
+          "São geralmente bem quietos.",
+          "Autoritários, mesmo sem perceber estão mandando e pedindo coisas aos outros.",
+          "Agem sempre com seriedade.",
+          "Odeiam gracinhas e brincadeirinhas, principalmente em momentos inoportunos.",
+          "Gostam e muito do silêncio.",
+          "São frios e calculistas.",
+          "Não têm dificuldade de colocar a razão na frente da emoção.",
+          "Estão sempre revirando os olhos.",
+          "Muito atentos a tudo.",
+          "Quase nada passa despercebido por eles.",
+          "Se estressam com facilidade.",
+          "Só tratam alguém bem de verdade se for alguém próximo, caso o contrário, tratam com indiferença.",
+          "Não costumam se importar se suas decisões vão prejudicar alguém.",
+          "São educados, principalmente com adultos, pois querem demonstrar que são confiáveis.",
+          "Metido seria uma boa palavra para defini-los.",
+          "As pessoas costumam se aproximar por interesse, ou por se sentirem seguras de não estarem no caminho deles.",
+          "Ninguém gostaria de estar na lista de inimigos dos filhos de Nix.",
+          "Apreciam amizades mais sérias e menos infantis.",
+          "Não gostam muito de crianças.",
+          "Detestam pessoas alegres e extrovertidas demais."
+        ]
+      },
+      {
+        id: "eros",
+        name: "Eros",
+        number: "28",
+        icon: "💘",
+        traits: [
+          "São sedutores e adoram receber olhares.",
+          "Muitos são narcisistas e se preocupam com a própria aparência.",
+          "Se apaixonam fácil, mas se desapaixonam na mesma velocidade.",
+          "Fofos, meigos e brincalhões.",
+          "Adoram pregar peças e jogar jogos.",
+          "Gostam de amizades, desde que elas não lhes atrapalhem e nem os impeçam de seguir seus objetivos.",
+          "São populares, adoram ser o centro das atenções.",
+          "São extremamente maliciosos e em tudo encontram motivos para tirarem uma casquinha.",
+          "Sentimentalmente, se apegam fácil com qualquer um que lhes dê atenção e carinho.",
+          "Suas emoções são muito vívidas, choram demais, riem demais, todas as emoções são extremas.",
+          "Têm uma alma infantil e de criança, não importa a idade.",
+          "São bem ciumentos quando se trata de algo que lhes pertence.",
+          "Adoram ser o cupido dos outros, principalmente de amigos.",
+          "Ficam irritados com facilidade.",
+          "São pessoas carinhosas, e que adoram receber carinho igualmente.",
+          "Observadores, e sabem de muitas coisas justamente por observar e ouvir.",
+          "Leais aos amigos.",
+          "Quer saber de quem fulano gosta? Pergunte a eles.",
+          "Apreciam a lealdade, podendo até punir quem não cumpre com ela.",
+          "Não têm dificuldade de falar sobre seus sentimentos."
+        ]
+      },
+      {
+        id: "selene",
+        name: "Selene",
+        number: "—",
+        icon: "🌙",
+        traits: [
+          "Pessoas bastante introvertidas.",
+          "Com amigos, costumam se soltar mais.",
+          "É difícil fazer amigos, não são os melhores nisso.",
+          "Mas quando fazem, suas amizades duram pra sempre.",
+          "Têm uma aura boa e carismática.",
+          "As pessoas os veem como alguém que não faria mal algum a ninguém.",
+          "São os protegidos da maioria, ninguém quer lhes causar mal e muito menos que alguém faça isso.",
+          "Podem ser injustamente subestimados por essa "delicadeza" e inocência.",
+          "É difícil de ficarem irritados.",
+          "Sempre têm um sorriso estampado no rosto, mesmo em momentos difíceis.",
+          "São muito persistentes.",
+          "Vão tentar até conseguir finalizar, nunca desistindo.",
+          "Pessoas amigáveis, que não negam o sentimento de acolher a ninguém.",
+          "São pacíficos e tentam não usar da violência.",
+          "Em seu tempo livre, geralmente estão lendo em um canto.",
+          "Boa parte do tempo estão "no mundo da lua".",
+          "É difícil fazer eles mudarem seus pensamentos.",
+          "Apesar disso, têm uma mente ampla para ouvir o lado de todos.",
+          "Têm uma imaginação muito boa, e constantemente pensam em coisas fora da realidade."
+        ]
+      },
+      {
+        id: "eris",
+        name: "Éris",
+        number: "—",
+        icon: "🍎",
+        traits: [
+          "Odeiam se sentir vulneráveis, e quando isso acontece, explodem.",
+          "Não gostam que sejam questionados.",
+          "Têm dificuldade em mentir, porque quando confrontados, eles ao invés de inventar uma desculpa, começam a gritar e xingar.",
+          "Dificilmente são de sentir pena de alguém.",
+          "Conhecidos como maus e sem coração.",
+          "Não estão nem aí pra moral, se aquilo é errado, desde que não tenha nenhuma lei impedindo, não têm problema em fazer.",
+          "Pessoas rancorosas, o rancor nunca sai da pessoa e parece só aumentar.",
+          "Vingativos, não medem esforços para se vingar da pior forma possível.",
+          "Quando colocam uma coisa na cabeça, é difícil mudar.",
+          "Querem sempre mais e mais, extremamente ambiciosos.",
+          "Pensam só em si e não ligam se vai prejudicar outras pessoas.",
+          "Vão fazer de tudo pra alcançar o que querem.",
+          "Querem liderar, mas sua individualidade e explosão não ajudam.",
+          "Gostam de ficar sozinhos por opção.",
+          "Odeiam que as pessoas estejam certas e elas não.",
+          "Palavrões saem com facilidade.",
+          "Não são de pedir desculpas porque dificilmente vão sentir que devem.",
+          "São temidos pela maioria das pessoas em volta.",
+          "Exalam uma aura má, então dificilmente alguém se aproxima deles pra puxar assunto, e gostam disso."
+        ]
+      }
+    ];
+
+    const TIEBREAKER_DATA = [
+      {
+        godId: "poseidon",
+        name: "Poseidon",
+        icon: "🔱",
+        traits: [
+          "Quando se apega à pessoa, é difícil largar.",
+          "Corajosos até demais.",
+          "Tentam pelo menos ver o lado bom das pessoas.",
+          "Seus vínculos emocionais são extremamente fortes.",
+          "Às vezes são bem lerdos para entender as coisas."
+        ]
+      },
+      {
+        godId: "zeus",
+        name: "Zeus",
+        icon: "⚡",
+        traits: [
+          "São impulsivos e não conseguem se conter nas palavras.",
+          "Odeiam que as pessoas opinem sobre o que estão fazendo.",
+          "Seu humor é diferente e é bem difícil fazer eles rirem.",
+          "Mesmo quando estão errados, não vão admitir e não gostam que falem sobre.",
+          "Não mudam de ideia facilmente."
+        ]
+      },
+      {
+        godId: "afrodite",
+        name: "Afrodite",
+        icon: "💖",
+        traits: [
+          "Se apaixonam fácil e em todo lugar que vão arrumam um crush.",
+          "Tentam demonstrar educação e boa conduta, principalmente com os mais velhos.",
+          "Se arrumam muito, mesmo que seja só para ir na padaria comprar pão.",
+          "Seu bem-estar e de amigos e familiares vem sempre antes do que é certo, então não se incomodam de fazer o que for.",
+          "Adoram serem conhecidos e serem o centro das atenções."
+        ]
+      },
+      {
+        godId: "atena",
+        name: "Atena",
+        icon: "🦉",
+        traits: [
+          "Estão quase todo tempo na companhia de um livro e isolados.",
+          "São responsáveis e nunca vão prometer algo se não forem cumprir.",
+          "Sua alma é de uma pessoa bem mais velha e sábia.",
+          "Os mais inteligentes do grupo de amigos.",
+          "São considerados bem mais responsáveis para a idade que têm."
+        ]
+      },
+      {
+        godId: "hermes",
+        name: "Hermes",
+        icon: "👟",
+        traits: [
+          "Adoram trollar as pessoas.",
+          "Não são o melhor exemplo de fidelidade e de manter sua palavra, mas na maioria das vezes as pessoas não descobrem.",
+          "Se fingem de inocentes e tiram proveito disso.",
+          "Escondem as coisas como ninguém. (Por exemplo, esconder algo na mão ou bolso que não quer dividir ou pegaram escondido.)",
+          "São bem cuidadosos e silenciosos, principalmente quando querem fazer algo em sigilo."
+        ]
+      },
+      {
+        godId: "hades",
+        name: "Hades",
+        icon: "💀",
+        traits: [
+          "Gostam de cores mais escuras.",
+          "Odeiam ser um fardo para pessoas ou depender de alguém.",
+          "Podem ser bem vingativos, e às vezes essa vingança pode até cegá-los e eles só pensam nisso e nada mais.",
+          "São bem determinados e levam promessas muito a sério.",
+          "Rotulados como macabros e estranhos, e isso dificulta das pessoas se aproximarem."
+        ]
+      },
+      {
+        godId: "hebe",
+        name: "Hebe",
+        icon: "🥂",
+        traits: [
+          "Geralmente animados e querem sempre mostrar serviço.",
+          "Dificilmente ficam com ódio por muito tempo.",
+          "Odeiam injustiças.",
+          "Podem ser bem lerdos e fáceis de manipular, costumam acreditar fácil demais nas coisas.",
+          "Não veem problema em emprestar suas coisas."
+        ]
+      },
+      {
+        godId: "iris",
+        name: "Íris",
+        icon: "🌈",
+        traits: [
+          "Nunca deixariam um animalzinho preso, como um passarinho.",
+          "Odeiam grosserias e não gostam muito de palavrões.",
+          "Abominam a violência, acham que a conversa é sempre o melhor caminho.",
+          "São ou já pensaram em serem veganos.",
+          "Pessoas confiáveis e que não quebram suas promessas."
+        ]
+      },
+      {
+        godId: "hipnos",
+        name: "Hipnos",
+        icon: "💤",
+        traits: [
+          "Não são a primeira opção das pessoas para deixar algo importante para fazer, pois provavelmente irão esquecer.",
+          "Não gostam de se meter em confusões pois é muito problemático e trabalhoso sair delas.",
+          "Não são muito vingativos.",
+          "Seu pecado com certeza seria a preguiça.",
+          "Leitura é a segunda coisa que mais lhe agrada, só perdendo para dormir."
+        ]
+      },
+      {
+        godId: "nemesis",
+        name: "Nêmesis",
+        icon: "⚖️",
+        traits: [
+          "ODEIAM mentiras e nunca as perdoariam.",
+          "São MUITO leais e corajosos, então não vão abandonar nem nos piores momentos.",
+          "Não existe mentira necessária, toda mentira é ruim e só acarreta coisas ruins.",
+          "Podem parecer bem finos e educados quando querem.",
+          "Sua mente está sempre uma vez ou outra pensando em um plano de vingança."
+        ]
+      }
+    ];
+
+    // Estado
+    let mode = 'classic'; // 'classic' | 'three'
+    let scores = {}; // { [godId]: { [index]: value } }
+    let tbScores = {}; // { [godId]: { [index]: value } }
+    let hunterChosen = false;
+
+    GODS_DATA.forEach(g => { scores[g.id] = {}; });
+    TIEBREAKER_DATA.forEach(t => { tbScores[t.godId] = {}; });
+
+    function formatNum(n) {
+      return Number.isInteger(n) ? n.toString() : n.toFixed(1).replace('.', ',');
+    }
+
+    function setMode(newMode) {
+      if (mode === newMode) return;
+      mode = newMode;
+
+      const btnClassic = document.getElementById('btn-mode-classic');
+      const btnThree = document.getElementById('btn-mode-three');
+      const rulesClassic = document.getElementById('rules-classic');
+      const rulesThree = document.getElementById('rules-three');
+
+      if (mode === 'classic') {
+        btnClassic.className = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition bg-amber-500 text-zinc-950 shadow";
+        btnThree.className = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition text-zinc-400 hover:text-zinc-200";
+        rulesClassic.classList.remove('hidden');
+        rulesThree.classList.add('hidden');
+      } else {
+        btnThree.className = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition bg-amber-500 text-zinc-950 shadow";
+        btnClassic.className = "px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition text-zinc-400 hover:text-zinc-200";
+        rulesThree.classList.remove('hidden');
+        rulesClassic.classList.add('hidden');
+      }
+
+      // Converter valores existentes suavemente
+      GODS_DATA.forEach(g => {
+        Object.keys(scores[g.id]).forEach(idx => {
+          const val = scores[g.id][idx];
+          if (val === undefined || val === 0) return;
+          if (newMode === 'three') {
+            scores[g.id][idx] = val === 1 ? 3 : (val === 0.5 ? 2 : val);
+          } else {
+            scores[g.id][idx] = val >= 2.5 ? 1 : (val >= 1 ? 0.5 : 0);
+          }
+        });
+      });
+
+      renderAllGods();
+      updateTotals();
+    }
+
+    function selectOption(godId, idx, val) {
+      if (scores[godId][idx] === val) {
+        delete scores[godId][idx];
+      } else {
+        scores[godId][idx] = val;
+      }
+      renderTraitControls(godId, idx);
+      updateTotals();
+    }
+
+    function selectTbOption(godId, idx, val) {
+      if (tbScores[godId][idx] === val) {
+        delete tbScores[godId][idx];
+      } else {
+        tbScores[godId][idx] = val;
+      }
+      renderTbTraitControls(godId, idx);
+      updateTotals();
+    }
+
+    function toggleHunter() {
+      hunterChosen = !hunterChosen;
+      const btn = document.getElementById('hunter-check-btn');
+      if (btn) {
+        if (hunterChosen) {
+          btn.className = "mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-500/20 border border-emerald-400 text-emerald-200 text-xs font-bold transition";
+          btn.innerHTML = "✅ Quero ser uma Caçadora de Ártemis!";
+        } else {
+          btn.className = "mt-3 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-300 text-xs font-semibold transition";
+          btn.innerHTML = "⬜ Marcar interesse em ser Caçadora de Ártemis";
+        }
+      }
+      updateTotals();
+    }
+
+    function renderQuickNav() {
+      const nav = document.getElementById('quick-nav');
+      nav.innerHTML = GODS_DATA.map(g => `
+        <a href="#god-${g.id}" class="shrink-0 px-3 py-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 text-xs text-zinc-300 flex items-center gap-1.5 transition">
+          <span>${g.icon}</span>
+          <span>${g.name}</span>
+          <span id="nav-score-${g.id}" class="text-[11px] font-bold text-amber-400 hidden">0</span>
+        </a>
+      `).join('');
+    }
+
+    function getControlsHTML(godId, idx, currentVal, isTiebreaker = false) {
+      const fn = isTiebreaker ? 'selectTbOption' : 'selectOption';
+      if (!isTiebreaker && mode === 'classic') {
+        const isYes = currentVal === 1;
+        const isHalf = currentVal === 0.5;
+        const isNo = currentVal === 0;
+        return `
+          <div class="flex items-center gap-1.5 shrink-0">
+            <button onclick="${fn}('${godId}', ${idx}, 1)" title="Sim (1 ponto)"
+              class="option-btn px-2.5 py-1.5 rounded-lg text-xs font-bold border ${isYes ? 'bg-emerald-500 border-emerald-400 text-zinc-950 shadow-sm' : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-600'}">
+              ${isYes ? '☑ Sim' : '☐ Sim'}
+            </button>
+            <button onclick="${fn}('${godId}', ${idx}, 0.5)" title="Mais ou menos (0,5 ponto)"
+              class="option-btn px-2.5 py-1.5 rounded-lg text-xs font-bold border ${isHalf ? 'bg-amber-400 border-amber-300 text-zinc-950 shadow-sm' : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-600'}">
+              ${isHalf ? '☑ +/-' : '☐ +/-'}
+            </button>
+            <button onclick="${fn}('${godId}', ${idx}, 0)" title="Não (0 ponto)"
+              class="option-btn px-2 py-1.5 rounded-lg text-xs font-semibold border ${isNo ? 'bg-zinc-700 border-zinc-500 text-zinc-100' : 'bg-zinc-950 border-zinc-800 text-zinc-500 hover:border-zinc-700'}">
+              Não
+            </button>
+          </div>
+        `;
+      } else {
+        const opts = [0, 1, 1.5, 2, 2.5, 3];
+        return `
+          <div class="flex flex-wrap items-center gap-1 shrink-0">
+            ${opts.map(v => {
+              const active = currentVal === v;
+              return `
+                <button onclick="${fn}('${godId}', ${idx}, ${v})"
+                  class="option-btn min-w-[34px] px-2 py-1 rounded-lg text-xs font-bold border ${active ? 'bg-amber-400 border-amber-300 text-zinc-950 shadow-sm' : 'bg-zinc-950 border-zinc-800 text-zinc-400 hover:border-zinc-600'}">
+                  ${formatNum(v)}
+                </button>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }
+    }
+
+    function renderTraitControls(godId, idx) {
+      const container = document.getElementById(`ctrl-${godId}-${idx}`);
+      const row = document.getElementById(`row-${godId}-${idx}`);
+      if (!container) return;
+      const val = scores[godId][idx];
+      container.innerHTML = getControlsHTML(godId, idx, val, false);
+      if (val !== undefined && val > 0) {
+        row.classList.add('bg-amber-500/5', 'border-amber-500/30');
+        row.classList.remove('bg-zinc-950/60', 'border-zinc-800/80');
+      } else {
+        row.classList.remove('bg-amber-500/5', 'border-amber-500/30');
+        row.classList.add('bg-zinc-950/60', 'border-zinc-800/80');
+      }
+    }
+
+    function renderTbTraitControls(godId, idx) {
+      const container = document.getElementById(`tb-ctrl-${godId}-${idx}`);
+      if (!container) return;
+      const val = tbScores[godId][idx];
+      container.innerHTML = getControlsHTML(godId, idx, val, true);
+    }
+
+    function renderAllGods() {
+      const container = document.getElementById('gods-container');
+      container.innerHTML = GODS_DATA.map(god => {
+        if (god.special) {
+          return `
+            <details id="god-${god.id}" open class="group bg-zinc-900/90 border border-zinc-800 rounded-2xl overflow-hidden shadow-lg">
+              <summary class="list-none cursor-pointer p-4 sm:p-5 flex items-center justify-between gap-3 bg-zinc-900 hover:bg-zinc-800/60 transition">
+                <div class="flex items-center gap-3">
+                  <span class="text-2xl">${god.icon}</span>
+                  <div>
+                    <div class="flex items-center gap-2">
+                      <h3 class="text-lg font-bold text-zinc-100">${god.name} <span class="text-xs font-normal text-zinc-500">#${god.number}</span></h3>
+                      <span class="text-[11px] px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 border border-zinc-700">Chalé Especial</span>
+                    </div>
+                    <p class="text-xs text-zinc-400">${god.specialTitle}</p>
+                  </div>
+                </div>
+                <span class="text-zinc-500 group-open:rotate-180 transition-transform">▼</span>
+              </summary>
+              <div class="p-4 sm:p-5 pt-2 border-t border-zinc-800/80 text-sm text-zinc-300 space-y-3">
+                <p class="whitespace-pre-line leading-relaxed text-zinc-300">${god.specialText}</p>
+                ${god.specialLink ? `
+                  <div>
+                    <a href="${god.specialLink}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-xs text-amber-400 hover:text-amber-300 underline">
+                      🔗 Ver exigências das Caçadoras de Ártemis na Wiki
+                    </a>
+                  </div>
+                  <button id="hunter-check-btn" onclick="toggleHunter()" class="mt-2 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-zinc-300 text-xs font-semibold transition">
+                    ⬜ Marcar interesse em ser Caçadora de Ártemis
+                  </button>
+                ` : ''}
+              </div>
+            </details>
+          `;
+        }
+
+        const maxPts = mode === 'classic' ? god.traits.length : god.traits.length * 3;
+        return `
+          <details id="god-${god.id}" open class="group bg-zinc-900/90 border border-zinc-800 rounded-2xl overflow-hidden shadow-lg">
+            <summary class="list-none cursor-pointer p-4 sm:p-5 flex items-center justify-between gap-3 bg-zinc-900 hover:bg-zinc-800/60 transition">
+              <div class="flex items-center gap-3">
+                <span class="text-2xl">${god.icon}</span>
+                <div>
+                  <div class="flex items-center gap-2">
+                    <h3 class="text-lg font-bold text-zinc-100">${god.name} <span class="text-xs font-normal text-zinc-500">#${god.number}</span></h3>
+                    ${god.id === 'persefone' ? '<span class="text-[10px] px-2 py-0.5 rounded-full bg-pink-500/10 text-pink-300 border border-pink-500/30">Afinidade Simbólica</span>' : ''}
+                  </div>
+                  <p class="text-xs text-zinc-400">${god.traits.length} características</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-3">
+                <div class="text-right">
+                  <div class="text-sm sm:text-base font-extrabold text-amber-400" id="header-score-${god.id}">0 / ${maxPts}</div>
+                  <div class="text-[11px] text-zinc-500" id="header-count-${god.id}">0 marcados</div>
+                </div>
+                <span class="text-zinc-500 group-open:rotate-180 transition-transform">▼</span>
+              </div>
+            </summary>
+
+            <div class="p-4 sm:p-5 pt-3 border-t border-zinc-800/80 space-y-2.5">
+              ${god.note ? `<p class="text-xs italic text-pink-300/90 bg-pink-950/20 border border-pink-500/20 rounded-xl p-3 mb-3">${god.note}</p>` : ''}
+              ${god.traits.map((trait, idx) => {
+                const val = scores[god.id][idx];
+                const isHighlighted = val !== undefined && val > 0;
+                return `
+                  <div id="row-${god.id}-${idx}" class="p-3 rounded-xl border transition flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${isHighlighted ? 'bg-amber-500/5 border-amber-500/30' : 'bg-zinc-950/60 border-zinc-800/80'}">
+                    <div class="flex items-start gap-2.5 text-sm text-zinc-200 leading-snug">
+                      <span class="text-xs font-mono text-zinc-500 mt-0.5 shrink-0">${String(idx + 1).padStart(2, '0')}.</span>
+                      <span>${trait}</span>
+                    </div>
+                    <div id="ctrl-${god.id}-${idx}" class="self-end sm:self-center">
+                      ${getControlsHTML(god.id, idx, val, false)}
+                    </div>
+                  </div>
+                `;
+              }).join('')}
+            </div>
+          </details>
+        `;
+      }).join('');
+    }
+
+    function renderTiebreaker() {
+      const container = document.getElementById('tiebreaker-container');
+      container.innerHTML = TIEBREAKER_DATA.map(tb => `
+        <div class="bg-zinc-950/80 border border-purple-500/20 rounded-xl p-4">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="font-bold text-purple-200 flex items-center gap-2">
+              <span>${tb.icon}</span>
+              <span>${tb.name}</span>
+            </h4>
+            <span id="tb-score-${tb.godId}" class="text-xs font-bold text-purple-300 bg-purple-500/10 px-2.5 py-1 rounded-lg">
+              +0 pts extras
+            </span>
+          </div>
+          <div class="space-y-2">
+            ${tb.traits.map((trait, idx) => `
+              <div class="p-2.5 rounded-lg bg-zinc-900/90 border border-zinc-800/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                <span class="text-xs sm:text-sm text-zinc-300">${trait}</span>
+                <div id="tb-ctrl-${tb.godId}-${idx}" class="self-end sm:self-center">
+                  ${getControlsHTML(tb.godId, idx, tbScores[tb.godId][idx], true)}
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleTiebreaker() {
+      const container = document.getElementById('tiebreaker-container');
+      const btn = document.getElementById('btn-toggle-tb');
+      const isHidden = container.classList.contains('hidden');
+      if (isHidden) {
+        container.classList.remove('hidden');
+        btn.textContent = "Ocultar Desempate";
+      } else {
+        container.classList.add('hidden');
+        btn.textContent = "Mostrar Desempate";
+      }
+    }
+
+    function getComputedResults() {
+      let totalItemsMarked = 0;
+      const results = GODS_DATA.filter(g => !g.special).map(g => {
+        const mainValues = Object.values(scores[g.id]);
+        const mainSum = mainValues.reduce((acc, v) => acc + (v || 0), 0);
+        const answeredCount = mainValues.filter(v => v !== undefined).length;
+        totalItemsMarked += answeredCount;
+
+        const tbValues = tbScores[g.id] ? Object.values(tbScores[g.id]) : [];
+        const tbSum = tbValues.reduce((acc, v) => acc + (v || 0), 0);
+        totalItemsMarked += tbValues.filter(v => v !== undefined).length;
+
+        const maxMain = mode === 'classic' ? g.traits.length : g.traits.length * 3;
+        return {
+          id: g.id,
+          name: g.name,
+          number: g.number,
+          icon: g.icon,
+          mainSum,
+          tbSum,
+          total: mainSum + tbSum,
+          maxMain,
+          answeredCount,
+          totalTraits: g.traits.length
+        };
+      });
+
+      results.sort((a, b) => b.total - a.total || b.mainSum - a.mainSum);
+      return { results, totalItemsMarked };
+    }
+
+    function updateTotals() {
+      const { results, totalItemsMarked } = getComputedResults();
+
+      // Atualizar cabeçalhos de cada deus e nav rápida
+      results.forEach(r => {
+        const headerScore = document.getElementById(`header-score-${r.id}`);
+        const headerCount = document.getElementById(`header-count-${r.id}`);
+        const navScore = document.getElementById(`nav-score-${r.id}`);
+        const tbScoreEl = document.getElementById(`tb-score-${r.id}`);
+
+        if (headerScore) {
+          headerScore.textContent = `${formatNum(r.total)} / ${r.maxMain}${r.tbSum > 0 ? ` (+${formatNum(r.tbSum)})` : ''}`;
+        }
+        if (headerCount) {
+          headerCount.textContent = `${r.answeredCount}/${r.totalTraits} respondidos`;
+        }
+        if (navScore) {
+          if (r.total > 0) {
+            navScore.textContent = formatNum(r.total);
+            navScore.classList.remove('hidden');
+          } else {
+            navScore.classList.add('hidden');
+          }
+        }
+        if (tbScoreEl) {
+          tbScoreEl.textContent = `+${formatNum(r.tbSum)} pts extras`;
+        }
+      });
+
+      document.getElementById('total-answered-badge').textContent = `${totalItemsMarked} itens avaliados`;
+
+      // Top 3 flutuante
+      const liveTop3 = document.getElementById('live-top3');
+      const activeTop = results.filter(r => r.total > 0).slice(0, 3);
+      if (activeTop.length === 0) {
+        liveTop3.innerHTML = `<span class="text-zinc-400">Marque as opções acima para ver seu Top 3 ao vivo...</span>`;
+      } else {
+        liveTop3.innerHTML = activeTop.map((r, i) => `
+          <div class="shrink-0 flex items-center gap-1.5 px-2.5 py-1 rounded-lg ${i === 0 ? 'bg-amber-500/20 border border-amber-500/40 text-amber-200 font-bold' : 'bg-zinc-900 border border-zinc-800 text-zinc-300'}">
+            <span>${i === 0 ? '🥇' : i === 1 ? '🥈' : '🥉'}</span>
+            <span>${r.icon} ${r.name}:</span>
+            <span class="text-amber-400">${formatNum(r.total)}</span>
+          </div>
+        `).join('');
+      }
+
+      // Winner Display
+      const winnerDisplay = document.getElementById('winner-display');
+      const topScore = results[0].total;
+
+      if (topScore === 0 && !hunterChosen) {
+        winnerDisplay.innerHTML = `
+          <div class="bg-zinc-950/80 border border-zinc-800 rounded-xl p-6 text-center text-zinc-400 text-sm">
+            Você ainda não marcou nenhum ponto. Role para cima e selecione as características com as quais você mais se identifica!
+          </div>
+        `;
+      } else if (topScore === 0 && hunterChosen) {
+        winnerDisplay.innerHTML = `
+          <div class="bg-emerald-950/30 border border-emerald-500/40 rounded-2xl p-6 text-center">
+            <div class="text-4xl mb-2">🏹</div>
+            <h3 class="text-2xl font-extrabold text-emerald-300">Caçadora de Ártemis</h3>
+            <p class="text-sm text-zinc-300 mt-1">Você optou por jurar lealdade à Deusa da Caça!</p>
+          </div>
+        `;
+      } else {
+        const winners = results.filter(r => r.total === topScore);
+        const isTie = winners.length > 1;
+
+        winnerDisplay.innerHTML = `
+          <div class="bg-gradient-to-br from-amber-500/15 via-zinc-900 to-zinc-950 border border-amber-400/40 rounded-2xl p-6 text-center">
+            <div class="text-4xl sm:text-5xl mb-2">${winners.map(w => w.icon).join(' ')}</div>
+            <div class="text-xs uppercase tracking-widest font-bold ${isTie ? 'text-purple-300' : 'text-amber-400'}">
+              ${isTie ? `⚖️ Empate no 1º Lugar (${winners.length} deuses)` : '✨ Seu Parente Divino é'}
+            </div>
+            <h3 class="text-2xl sm:text-4xl font-extrabold text-white mt-1">
+              ${winners.map(w => w.name).join(' & ')}
+            </h3>
+            <p class="text-amber-300 font-bold text-base mt-1">
+              ${formatNum(topScore)} pontos
+            </p>
+            ${isTie ? `
+              <div class="mt-4 inline-block bg-purple-950/60 border border-purple-500/40 rounded-xl px-4 py-2.5 text-xs text-purple-200">
+                Empatou! Use a seção <strong>Desempate (0 a 3 pontos)</strong> logo acima entre <strong>${winners.map(w => w.name).join(', ')}</strong> para decidir!
+              </div>
+            ` : ''}
+            ${hunterChosen ? `
+              <div class="mt-3 text-xs text-emerald-300 font-semibold">
+                🏹 + Você também marcou interesse em se tornar uma <strong>Caçadora de Ártemis</strong>!
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }
+
+      // Ranking Completo
+      const rankingList = document.getElementById('ranking-list');
+      rankingList.innerHTML = results.map((r, idx) => {
+        const pct = Math.min(100, Math.round((r.mainSum / r.maxMain) * 100));
+        const isTop = r.total > 0 && r.total === topScore;
+        return `
+          <div class="p-3 rounded-xl border ${isTop ? 'bg-amber-500/10 border-amber-500/40' : 'bg-zinc-950/70 border-zinc-800/80'} flex flex-col gap-1.5">
+            <div class="flex items-center justify-between text-sm">
+              <div class="flex items-center gap-2 font-semibold ${isTop ? 'text-amber-200' : 'text-zinc-200'}">
+                <span class="text-xs font-mono text-zinc-500 w-5">${idx + 1}.</span>
+                <span>${r.icon}</span>
+                <span>${r.name}</span>
+              </div>
+              <div class="font-bold ${isTop ? 'text-amber-400' : 'text-zinc-300'}">
+                ${formatNum(r.total)} pts
+              </div>
+            </div>
+            <div class="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+              <div class="h-full ${isTop ? 'bg-amber-400' : 'bg-zinc-500'} rounded-full transition-all duration-300" style="width: ${pct}%"></div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function expandAll(openState) {
+      document.querySelectorAll('#gods-container details').forEach(d => {
+        d.open = openState;
+      });
+    }
+
+    function resetAll() {
+      if (!confirm("Tem certeza que deseja zerar todas as marcações?")) return;
+      GODS_DATA.forEach(g => { scores[g.id] = {}; });
+      TIEBREAKER_DATA.forEach(t => { tbScores[t.godId] = {}; });
+      hunterChosen = false;
+      renderAllGods();
+      renderTiebreaker();
+      updateTotals();
+    }
+
+    function copyResult() {
+      const { results } = getComputedResults();
+      const top5 = results.filter(r => r.total > 0).slice(0, 5);
+      if (top5.length === 0 && !hunterChosen) {
+        alert("Marque pelo menos algumas características antes de copiar o resultado!");
+        return;
+      }
+
+      const topScore = results[0].total;
+      const winners = results.filter(r => r.total === topScore && topScore > 0);
+
+      let text = "⚡ *Meu Resultado — Teste Parente Divino (Percy Jackson)* ⚡
+
+";
+      if (winners.length === 1) {
+        text += `🏆 *Parente Divino:* ${winners[0].icon} ${winners[0].name} (${formatNum(winners[0].total)} pts)
+
+`;
+      } else if (winners.length > 1) {
+        text += `⚖️ *Empate no 1º Lugar:* ${winners.map(w => `${w.icon} ${w.name}`).join(' e ')} (${formatNum(topScore)} pts)
+
+`;
+      }
+
+      if (hunterChosen) {
+        text += "🏹 *Extra:* Também aceitei o chamado das Caçadoras de Ártemis!
+
+";
+      }
+
+      if (top5.length > 0) {
+        text += "*Meu Top 5 Chalés:*
+";
+        top5.forEach((r, i) => {
+          text += `${i + 1}º ${r.icon} ${r.name}: ${formatNum(r.total)} pts
+`;
+        });
+      }
+
+      navigator.clipboard.writeText(text).then(() => {
+        const fb = document.getElementById('copy-feedback');
+        fb.classList.remove('hidden');
+        setTimeout(() => fb.classList.add('hidden'), 4000);
+      });
+    }
+
+    // Inicialização
+    renderQuickNav();
+    renderAllGods();
+    renderTiebreaker();
+    updateTotals();
+  </script>
+</body>
+</html>
