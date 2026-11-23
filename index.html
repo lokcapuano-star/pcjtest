@@ -23,7 +23,6 @@
     .option-btn:active {
       transform: scale(0.95);
     }
-    /* Custom scrollbar */
     ::-webkit-scrollbar {
       width: 8px;
       height: 8px;
@@ -42,7 +41,6 @@
 </head>
 <body class="min-h-screen pb-36 selection:bg-amber-500/30 selection:text-amber-200">
 
-  <!-- Header -->
   <header class="bg-gradient-to-b from-amber-950/40 via-zinc-900/90 to-zinc-950 border-b border-amber-500/20 pt-8 pb-6 px-4">
     <div class="max-w-4xl mx-auto text-center">
       <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold tracking-wider uppercase mb-3">
@@ -59,7 +57,6 @@
 
   <main class="max-w-4xl mx-auto px-4 pt-6 space-y-6">
 
-    <!-- Instruções & Seletor de Modo -->
     <section class="bg-zinc-900/90 border border-zinc-800 rounded-2xl p-5 shadow-xl">
       <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-4 border-b border-zinc-800">
         <div>
@@ -71,7 +68,6 @@
           </p>
         </div>
 
-        <!-- Mode Toggle -->
         <div class="inline-flex p-1 rounded-xl bg-zinc-950 border border-zinc-800 self-start">
           <button id="btn-mode-classic" onclick="setMode('classic')" class="px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition bg-amber-500 text-zinc-950 shadow">
             Clássico (1 / 0,5)
@@ -82,7 +78,6 @@
         </div>
       </div>
 
-      <!-- Regras dinâmicas -->
       <div id="rules-classic" class="mt-4 text-sm text-zinc-300 space-y-1.5">
         <p>• <strong class="text-amber-300">1.</strong> São vinte tópicos com características sobre os filhos de tais deuses.</p>
         <p>• <strong class="text-emerald-400">2. Sim (1 pt):</strong> A cada tópico que se identificar totalmente, marque <strong>Sim</strong>.</p>
@@ -123,7 +118,6 @@
         </div>
       </div>
 
-      <!-- Barra de Ferramentas Rápidas -->
       <div class="mt-4 pt-3 border-t border-zinc-800/80 flex flex-wrap items-center justify-between gap-2 text-xs">
         <div class="flex items-center gap-2">
           <button onclick="expandAll(true)" class="px-2.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 transition">
@@ -139,17 +133,10 @@
       </div>
     </section>
 
-    <!-- Filtro rápido de deuses -->
-    <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar" id="quick-nav">
-      <!-- Preenchido via JS -->
-    </div>
+    <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar" id="quick-nav"></div>
 
-    <!-- Container dos Deuses -->
-    <div id="gods-container" class="space-y-4">
-      <!-- Preenchido via JS -->
-    </div>
+    <div id="gods-container" class="space-y-4"></div>
 
-    <!-- Seção de Desempate -->
     <section id="tiebreaker-section" class="bg-gradient-to-br from-purple-950/30 via-zinc-900 to-zinc-900 border border-purple-500/30 rounded-2xl p-5 shadow-xl">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-purple-500/20">
         <div>
@@ -166,34 +153,25 @@
         </button>
       </div>
 
-      <div id="tiebreaker-container" class="hidden mt-5 space-y-5">
-        <!-- Preenchido via JS -->
-      </div>
+      <div id="tiebreaker-container" class="hidden mt-5 space-y-5"></div>
     </section>
 
-    <!-- Painel de Resultado Final -->
     <section id="final-result-section" class="bg-gradient-to-b from-zinc-900 to-zinc-950 border-2 border-amber-500/40 rounded-2xl p-6 shadow-2xl">
       <div class="text-center mb-6">
         <span class="text-xs font-bold uppercase tracking-widest text-amber-400">🏆 Oráculo de Delfos • Resultado</span>
         <h2 class="text-2xl sm:text-3xl font-extrabold text-zinc-100 mt-1">Seu Parente Divino</h2>
       </div>
 
-      <div id="winner-display" class="mb-6">
-        <!-- Preenchido via JS -->
-      </div>
+      <div id="winner-display" class="mb-6"></div>
 
-      <!-- Ranking Completo -->
       <div class="mt-6">
         <div class="flex items-center justify-between mb-3">
           <h3 class="text-sm font-bold uppercase tracking-wider text-zinc-400">Placar Geral dos Chalés</h3>
           <span id="total-answered-badge" class="text-xs text-zinc-500">0 itens marcados</span>
         </div>
-        <div id="ranking-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          <!-- Preenchido via JS -->
-        </div>
+        <div id="ranking-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
       </div>
 
-      <!-- Botão Copiar Resultado -->
       <div class="mt-6 pt-5 border-t border-zinc-800 flex flex-col sm:flex-row items-center justify-center gap-3">
         <button onclick="copyResult()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-zinc-950 font-bold text-sm shadow-lg shadow-amber-500/20 transition flex items-center justify-center gap-2">
           <span>📋 Copiar Resultado para Enviar</span>
@@ -204,7 +182,6 @@
 
   </main>
 
-  <!-- Barra Flutuante Inferior (Placar ao vivo) -->
   <div class="fixed bottom-0 inset-x-0 bg-zinc-950/95 backdrop-blur-md border-t border-zinc-800 px-4 py-3 z-50 shadow-2xl">
     <div class="max-w-4xl mx-auto flex items-center justify-between gap-3">
       <div class="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs sm:text-sm" id="live-top3">
@@ -242,7 +219,7 @@
           "Apesar de não demonstrar muito, são pessoas carinhosas, e que gostam de uma atenção a mais.",
           "São bem perfeccionistas, e não gostam de nada desorganizado.",
           "Pessoas de emoções fortes, mas que sabem a hora de contê-las e não veem dificuldade.",
-          "Não admitem as coisas com muita facilidade, então pode esperar sentado se quiser ouvir uma confissão de "ok, você estava certo".",
+          "Não admitem as coisas com muita facilidade, então pode esperar sentado se quiser ouvir uma confissão de \"ok, você estava certo\".",
           "Amam sempre receber elogios, e eles atuam como um combustível (apesar de que vai continuar bem mesmo sem eles).",
           "Pessoas teimosas e firmes em suas ideias. Defenderá com unhas, dentes e argumentos super válidos, mesmo que por mais maluca seja a ideia."
         ]
@@ -254,9 +231,7 @@
         icon: "🦚",
         special: "no-children",
         specialTitle: "Chalé Simbólico — Hera não tem filhos semideuses",
-        specialText: "Hera não tem filhos, seu chalé é apenas "simbólico".
-
-"No entanto, ela nunca terá filhos semideuses, porque como a Deusa do Casamento, não estava em sua natureza ser infiel, o que por sua vez significava que ela não teria, e nunca teria, heróis mortais para fazê-la licitação."",
+        specialText: "Hera não tem filhos, seu chalé é apenas \"simbólico\".\n\n\"No entanto, ela nunca terá filhos semideuses, porque como a Deusa do Casamento, não estava em sua natureza ser infiel, o que por sua vez significava que ela não teria, e nunca teria, heróis mortais para fazê-la licitação.\"",
         traits: []
       },
       {
@@ -273,7 +248,7 @@
           "Aliás, querem sempre mostrar do que são capazes. (Mesmo que não sejam, acabam dando um jeito.)",
           "No fundo têm um bom coração, e o que mais prezam é pelo bem-estar dos que amam.",
           "Detestam a traição, principalmente quando é consigo. Nunca mais vão olhar para a pessoa com os mesmos olhos.",
-          "Dependem de tempo para decidir a melhor coisa a se fazer, não é simplesmente "ah, pensei bora lá", e sim um "CALMA AÍ, TÔ PENSANDO".",
+          "Dependem de tempo para decidir a melhor coisa a se fazer, não é simplesmente \"ah, pensei bora lá\", e sim um \"CALMA AÍ, TÔ PENSANDO\".",
           "Odeiam serem apressados, isso só piora as coisas e os fazem ficar nervosos.",
           "Tendem a ter ideias loucas e arriscadas, mas que no final acabam dando certo.",
           "Sua ligação com a água é bem forte. Costuma se sentir bem em contato com a água, seja em piscina ou mar. É incrivelmente relaxante e traz paz.",
@@ -339,7 +314,7 @@
           "Apreciam esportes violentos, como luta ou futebol americano.",
           "Querem que as pessoas obedeçam suas ordens, apesar de seu orgulho não ajudar muito em tomar as melhores decisões como líder.",
           "São egoístas com o que consideram seu, e não gostam de dividir.",
-          ""Como assim ele falou assim com você? Ele vai receber uma surra!"",
+          "\"Como assim ele falou assim com você? Ele vai receber uma surra!\"",
           "Apesar da máscara de pessoa durona, no fundo têm medo de perder quem amam."
         ]
       },
@@ -365,7 +340,7 @@
           "Sabem do seu potencial e não gostam quando ignoram.",
           "São aquelas pessoas que as mães adorariam que o filho tivesse como companhia, pois são responsáveis e conseguem manter os outros na linha.",
           "Não são fãs de quebrar as regras, fazendo isso apenas se for MUITO necessário.",
-          "Adoram saber das coisas e apresentar fatos, mas as pessoas tendem a achar "metido" por simplesmente querer falar do que sabem.",
+          "Adoram saber das coisas e apresentar fatos, mas as pessoas tendem a achar \"metido\" por simplesmente querer falar do que sabem.",
           "Apreciam a sua própria companhia, não há problema em ficar sozinha com um livro em mãos.",
           "Aprendem rápido quando o assunto lhes interessa.",
           "Acreditam que as regras são importantes, pois sem elas as pessoas não respeitariam nada e viraria uma bagunça."
@@ -432,7 +407,7 @@
           "Máquinas são sempre boas companhias.",
           "Não são bons com conselhos.",
           "É difícil ter inimigos, eles simplesmente não fazem nada ao ponto de serem odiados por alguém, são apenas quietos em seu canto.",
-          "Odeiam o fato das pessoas excluírem os "estranhos" ou os "desajeitados".",
+          "Odeiam o fato das pessoas excluírem os \"estranhos\" ou os \"desajeitados\".",
           "Suas amizades são sempre verdadeiras e confiáveis, que vai poder contar pela vida toda.",
           "São engraçados, mas só quem realmente lhes conhece sabe desse lado.",
           "As pessoas não costumam entender quando eles falam sobre robótica, e eles têm que traduzir e diminuir várias vezes, isso se as pessoas não desistirem de entender."
@@ -456,11 +431,11 @@
           "Ser o centro das atenções é sempre legal, e eles adoram.",
           "São boas pessoas para levantar o astral de alguém. Vão passar o dia inteiro ajudando a pessoa se sentir bem com quem é, tanto fisicamente quanto internamente. São as melhores pessoas para ajudar os outros a se aceitarem.",
           "Sabem que são poderosos e adoram isso.",
-          "Por mais que não seja intencional, muitos acabam "quebrando" o coração das pessoas porque o amor acaba não sendo correspondido.",
+          "Por mais que não seja intencional, muitos acabam \"quebrando\" o coração das pessoas porque o amor acaba não sendo correspondido.",
           "Geralmente educados, isso até alguém os insultar.",
-          ""Por favorzinho, sabe que eu te amo né?" Acaba sendo uma das frases mais usadas.",
+          "\"Por favorzinho, sabe que eu te amo né?\" Acaba sendo uma das frases mais usadas.",
           "As pessoas costumam reclamar da demora deles para se arrumar quando vão sair.",
-          "Tudo para si é um máximo e super incrível, não se assuste se eles começarem a te elogiar por "pouca coisa".",
+          "Tudo para si é um máximo e super incrível, não se assuste se eles começarem a te elogiar por \"pouca coisa\".",
           "A opinião alheia não os afeta, pois se aceitam do jeito que são.",
           "Usam as palavras certas e jeitos que a pessoa não consegue dizer não para eles.",
           "Adoram falar sobre sentimentos com os outros e de dar conselhos amorosos."
@@ -485,7 +460,7 @@
           "É fácil ganhar discussões de escolha (por exemplo, escolher um filme), pois eles sabem usar argumentos incríveis quando querem algo.",
           "E quando não querem algo, acham defeitos para que a pessoa simplesmente desista da ideia.",
           "Amam viajar e conhecer novos lugares, se pudessem até trabalhariam com isso.",
-          "Conseguem manter a "aparência" de alguém confiável e que nunca faria ou faz algo de ruim.",
+          "Conseguem manter a \"aparência\" de alguém confiável e que nunca faria ou faz algo de ruim.",
           "É bem fácil para eles convencer as pessoas.",
           "Sabem quando a situação está feia e é hora de meter o pé, fugir de fininho é com eles mesmo.",
           "Suas ideias para se safar não têm limites, se estão com problemas sua mente é muito rápida em uma solução.",
@@ -643,7 +618,7 @@
           "Tudo é motivo de competição.",
           "Amam ganhar, e não existe essa de o que importa é participar.",
           "Costumam causar confusões por causa da sua aura competitiva, as outras pessoas acabam se afastando.",
-          "Têm uma personalidade excêntrica e "pirada".",
+          "Têm uma personalidade excêntrica e \"pirada\".",
           "As pessoas costumam rotular eles como loucos por causa de sua obsessão por ganhar.",
           "São pessoas bem animadas e que nunca estão quietas.",
           "Se afastam daqueles que podem atrapalhar suas futuras conquistas, mesmo que a pessoa seja importante para si.",
@@ -676,13 +651,13 @@
           "Não gostam de ver os outros tristes, e sempre vão fazer de tudo até animá-los.",
           "Não veem problema em mentir se for para agradar alguém, como por exemplo, falar que a roupa está bonita quando não está.",
           "Os melhores amigos que alguém pode ter, sempre vão estar ao lado para ajudar.",
-          "Às vezes são feitos de bobos fácil, por causa da "inocência".",
+          "Às vezes são feitos de bobos fácil, por causa da \"inocência\".",
           "Podem acabar sendo usados pelos mais manipuladores, por causa da sua bondade excessiva.",
           "Alguns são desajeitados.",
           "Quando quebram algo que não era seu, vão fazer de tudo para a pessoa desculpar (mesmo que ela já tenha falado que não foi nada).",
           "Raramente se irritam ou explodem.",
           "Um dos seus maiores medos é ficar sozinho sem amigos.",
-          "Têm dificuldade de dizer "não" para as pessoas.",
+          "Têm dificuldade de dizer \"não\" para as pessoas.",
           "Querem sempre o bem de todo mundo, mesmo que não mereçam.",
           "Quase não têm inimigos, pois não têm o porquê das pessoas os odiarem, e se odeiam é por motivo bobo.",
           "São calorosos e gostam de contato físico, como um abraço ou beijinho no rosto.",
@@ -730,7 +705,7 @@
           "Orgulhosos, e seu orgulho é facilmente ferido.",
           "Eles odeiam serem rebaixados ou subestimados.",
           "São frios quando precisam, não tendo dificuldade de colocar a razão na frente da emoção.",
-          "Podem ter a fama de "malvados" por causa dessa sua frieza.",
+          "Podem ter a fama de \"malvados\" por causa dessa sua frieza.",
           "As pessoas em volta costumam dizer que eles têm um ar enigmático e misterioso.",
           "Não são muito fãs de falar sobre sentimentos, nem de se abrir com qualquer um.",
           "Mas, não têm dificuldade de se abrir com quem confiam de verdade.",
@@ -851,7 +826,7 @@
           "Acham que não têm tempo para diversão, estão mais ocupados em deixar seus amigos felizes do que a si mesmos.",
           "Conseguem mentir facilmente.",
           "Não são de se importar com o que não interessa aos amigos.",
-          "Todo mundo costuma dizer que eles são "góticos".",
+          "Todo mundo costuma dizer que eles são \"góticos\".",
           "Sua paz interior é praticamente inabalável.",
           "Não são muito de falar palavrão, isso porque não acham necessário.",
           "Se quiserem tentar, conseguem fazer amizades facilmente."
@@ -926,7 +901,7 @@
           "Têm uma aura boa e carismática.",
           "As pessoas os veem como alguém que não faria mal algum a ninguém.",
           "São os protegidos da maioria, ninguém quer lhes causar mal e muito menos que alguém faça isso.",
-          "Podem ser injustamente subestimados por essa "delicadeza" e inocência.",
+          "Podem ser injustamente subestimados por essa \"delicadeza\" e inocência.",
           "É difícil de ficarem irritados.",
           "Sempre têm um sorriso estampado no rosto, mesmo em momentos difíceis.",
           "São muito persistentes.",
@@ -934,7 +909,7 @@
           "Pessoas amigáveis, que não negam o sentimento de acolher a ninguém.",
           "São pacíficos e tentam não usar da violência.",
           "Em seu tempo livre, geralmente estão lendo em um canto.",
-          "Boa parte do tempo estão "no mundo da lua".",
+          "Boa parte do tempo estão \"no mundo da lua\".",
           "É difícil fazer eles mudarem seus pensamentos.",
           "Apesar disso, têm uma mente ampla para ouvir o lado de todos.",
           "Têm uma imaginação muito boa, e constantemente pensam em coisas fora da realidade."
@@ -1092,10 +1067,9 @@
       }
     ];
 
-    // Estado
-    let mode = 'classic'; // 'classic' | 'three'
-    let scores = {}; // { [godId]: { [index]: value } }
-    let tbScores = {}; // { [godId]: { [index]: value } }
+    let mode = 'classic';
+    let scores = {};
+    let tbScores = {};
     let hunterChosen = false;
 
     GODS_DATA.forEach(g => { scores[g.id] = {}; });
@@ -1126,7 +1100,6 @@
         rulesClassic.classList.add('hidden');
       }
 
-      // Converter valores existentes suavemente
       GODS_DATA.forEach(g => {
         Object.keys(scores[g.id]).forEach(idx => {
           const val = scores[g.id][idx];
@@ -1206,7 +1179,7 @@
               ${isHalf ? '☑ +/-' : '☐ +/-'}
             </button>
             <button onclick="${fn}('${godId}', ${idx}, 0)" title="Não (0 ponto)"
-              class="option-btn px-2 py-1.5 rounded-lg text-xs font-semibold border ${isNo ? 'bg-zinc-700 border-zinc-500 text-zinc-100' : 'bg-zinc-950 border-zinc-800 text-zinc-500 hover:border-zinc-700'}">
+              class="option-btn px-2.5 py-1.5 rounded-lg text-xs font-semibold border ${isNo ? 'bg-zinc-700 border-zinc-500 text-zinc-100' : 'bg-zinc-950 border-zinc-800 text-zinc-500 hover:border-zinc-700'}">
               Não
             </button>
           </div>
@@ -1407,7 +1380,6 @@
     function updateTotals() {
       const { results, totalItemsMarked } = getComputedResults();
 
-      // Atualizar cabeçalhos de cada deus e nav rápida
       results.forEach(r => {
         const headerScore = document.getElementById(`header-score-${r.id}`);
         const headerCount = document.getElementById(`header-count-${r.id}`);
@@ -1435,7 +1407,6 @@
 
       document.getElementById('total-answered-badge').textContent = `${totalItemsMarked} itens avaliados`;
 
-      // Top 3 flutuante
       const liveTop3 = document.getElementById('live-top3');
       const activeTop = results.filter(r => r.total > 0).slice(0, 3);
       if (activeTop.length === 0) {
@@ -1450,7 +1421,6 @@
         `).join('');
       }
 
-      // Winner Display
       const winnerDisplay = document.getElementById('winner-display');
       const topScore = results[0].total;
 
@@ -1498,7 +1468,6 @@
         `;
       }
 
-      // Ranking Completo
       const rankingList = document.getElementById('ranking-list');
       rankingList.innerHTML = results.map((r, idx) => {
         const pct = Math.min(100, Math.round((r.mainSum / r.maxMain) * 100));
@@ -1550,31 +1519,21 @@
       const topScore = results[0].total;
       const winners = results.filter(r => r.total === topScore && topScore > 0);
 
-      let text = "⚡ *Meu Resultado — Teste Parente Divino (Percy Jackson)* ⚡
-
-";
+      let text = "⚡ *Meu Resultado — Teste Parente Divino (Percy Jackson)* ⚡\n\n";
       if (winners.length === 1) {
-        text += `🏆 *Parente Divino:* ${winners[0].icon} ${winners[0].name} (${formatNum(winners[0].total)} pts)
-
-`;
+        text += `🏆 *Parente Divino:* ${winners[0].icon} ${winners[0].name} (${formatNum(winners[0].total)} pts)\n\n`;
       } else if (winners.length > 1) {
-        text += `⚖️ *Empate no 1º Lugar:* ${winners.map(w => `${w.icon} ${w.name}`).join(' e ')} (${formatNum(topScore)} pts)
-
-`;
+        text += `⚖️ *Empate no 1º Lugar:* ${winners.map(w => `${w.icon} ${w.name}`).join(' e ')} (${formatNum(topScore)} pts)\n\n`;
       }
 
       if (hunterChosen) {
-        text += "🏹 *Extra:* Também aceitei o chamado das Caçadoras de Ártemis!
-
-";
+        text += "🏹 *Extra:* Também aceitei o chamado das Caçadoras de Ártemis!\n\n";
       }
 
       if (top5.length > 0) {
-        text += "*Meu Top 5 Chalés:*
-";
+        text += "*Meu Top 5 Chalés:*\n";
         top5.forEach((r, i) => {
-          text += `${i + 1}º ${r.icon} ${r.name}: ${formatNum(r.total)} pts
-`;
+          text += `${i + 1}º ${r.icon} ${r.name}: ${formatNum(r.total)} pts\n`;
         });
       }
 
@@ -1585,7 +1544,6 @@
       });
     }
 
-    // Inicialização
     renderQuickNav();
     renderAllGods();
     renderTiebreaker();
